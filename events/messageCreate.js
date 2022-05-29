@@ -146,7 +146,7 @@ module.exports = {
 		const timestamps = cooldowns.get(command.name);
 		const cooldownAmount = (command.cooldown || 3) * 1000;
 
-		if (timestamps.has(message.author.id)) {
+		/*if (timestamps.has(message.author.id)) {
 			const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
 			if (now < expirationTime) {
@@ -157,7 +157,7 @@ module.exports = {
 					)} more second(s) before reusing the \`${command.name}\` command.`,
 				});
 			}
-		}
+		}*/
 
 		timestamps.set(message.author.id, now);
 		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
