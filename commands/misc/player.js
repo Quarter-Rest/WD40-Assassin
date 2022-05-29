@@ -48,13 +48,14 @@ module.exports = {
                 players = [];
             }
 
-            let printString = "Players:\n";
+            let embed = new MessageEmbed()
+			.setTitle('Players');
+
             players.forEach(id => {
                 console.log(message.client.users.cache.get(id).username)
-                printString.concat(message.client.users.cache.get(id).username)
-                printString.concat("\n")
+                embed.addField(Player, message.client.users.cache.get(id).username, true)
             }); 
-            message.channel.send(printString);
+            message.channel.send({embeds: [embed]});
         }
 
         if(save)
