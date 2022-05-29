@@ -39,6 +39,7 @@ module.exports = {
                 game.started = true;
 
                 players.forEach(id => {
+                    console.log(message.client.users.cache.get(id));
                     message.client.users.cache.get(id).send("Test");
                 }); 
 
