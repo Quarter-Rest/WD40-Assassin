@@ -88,7 +88,6 @@ module.exports = {
 
             for (const [id, data] of Object.entries(players)) 
             {
-                console.log(message.client.users.cache.get(id));
                 embed.addField("Player", message.client.users.cache.get(id).username, true)
             }
 
