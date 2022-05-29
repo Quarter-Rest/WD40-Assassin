@@ -15,8 +15,7 @@ module.exports = {
 
         const commandType = args[0].toLowerCase();
 
-        nconf.use('memory');
-        nconf.load();
+        nconf.file('/data.json');
 
         if(commandType == "add")
         {
