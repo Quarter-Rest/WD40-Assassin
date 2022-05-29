@@ -1,6 +1,7 @@
 var nconf = require('nconf');
 module.exports = {
 	name: "player",
+    aliases: "players",
     description: "Player commands",
 
 	execute(message, args) 
