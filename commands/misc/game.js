@@ -29,18 +29,18 @@ module.exports = {
 
         if(commandType == "start")
         {
-            StartGame(message);
+            StartGame(message, game);
         }
 
         if(commandType == "end")
         {
-            EndGame(message);
+            EndGame(message, game);
         }
 
         if(commandType == "restart")
         {
-            EndGame(message);
-            StartGame(message);
+            EndGame(message, game);
+            StartGame(message, game);
         }
 
         if(save)
@@ -88,7 +88,7 @@ function StartGame(message)
     }
 }
 
-function EndGame(message)
+function EndGame(message, game)
 {
     if(game.started === false)
     {
