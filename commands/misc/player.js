@@ -31,6 +31,8 @@ module.exports = {
                 players = {};
             }
 
+            console.log(players);
+
             if(!(user.id in players))
             {
                 players[user.id] = {target: null, alive: true};
@@ -58,8 +60,6 @@ module.exports = {
                 message.channel.send("No players.");
                 return;
             }
-
-            console.log(players);
 
             if(user.id in players)
             {
