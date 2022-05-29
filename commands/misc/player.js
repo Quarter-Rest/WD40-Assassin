@@ -35,7 +35,7 @@ module.exports = {
                 players = {};
             }
 
-            if(!(players[user.id]))
+            if(!(user.id in players))
             {
                 global.con.query(`INSERT INTO players (ID, TARGET, ALIVE) values (${user.id}, '0', true)`, (err, row) => {
                     // Return if there is an error
