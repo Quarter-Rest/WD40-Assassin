@@ -94,25 +94,23 @@ module.exports = {
 
         if(commandType == "get")
         {
-            let players = db.get('players');
-            if(players === undefined)
-            {
-                players = {};
-            }
+            global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+                let players = results;
 
-            let embed = new MessageEmbed()
-            .setColor('#0099ff')
-			.setTitle('Players');
+                let embed = new MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Players');
 
-            for (const [id, data] of Object.entries(players)) 
-            {
-                let player = message.client.users.cache.get(id);
-                if(player === undefined) continue;
+                for (const [id, data] of Object.entries(players)) 
+                {
+                    let player = message.client.users.cache.get(id);
+                    if(player === undefined) continue;
 
-                embed.addField("Player", message.client.users.cache.get(id).username, true)
-            }
+                    embed.addField("Player", message.client.users.cache.get(id).username, true)
+                }
 
-            message.channel.send({embeds: [embed]});
+                message.channel.send({embeds: [embed]});
+            });
         }
         
 	},
