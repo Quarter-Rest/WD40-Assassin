@@ -50,7 +50,8 @@ module.exports = {
 
             let printString = "Players:\n";
             players.forEach(id => {
-                printString.concat(message.client.users.fetch(id).name)
+                console.log(message.client.users.fetch(id))
+                printString.concat(message.client.users.fetch(id).tag)
                 printString.concat("\n")
             }); 
             message.channel.send(printString);
