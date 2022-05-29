@@ -41,6 +41,39 @@ module.exports = {
             }
         }
 
+        if(commandType == "remove")
+        {
+            const user = message.mentions.users.first();
+            if (user === undefined) 
+            {
+                message.channel.send("That is not a valid user.");
+                return; // Do not proceed, there is no user.
+            }
+
+            let players = nconf.get('players');
+            if(players === undefined)
+            {
+                message.channel.send("No players.");
+                return;
+            }
+
+            if(players.includes(user.id))
+            {
+                const index = players.indexOf(user.id);
+                if (index > -1) {
+                    players.splice(index, 1); // 2nd parameter means remove one item only
+                }
+
+                nconf.set('players', players);
+                message.channel.send("Removed.");
+                save = true;
+            }
+            else
+            {
+                message.channel.send("That player is not in the game.");
+            }
+        }
+
         if(commandType == "get")
         {
             let players = nconf.get('players');
