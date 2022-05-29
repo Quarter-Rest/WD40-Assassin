@@ -103,7 +103,7 @@ module.exports = {
 
 
                 players.forEach(playerData => {
-                    let getPlayer = client.users.fetch(playerData.ID);
+                    let getPlayer = message.client.users.fetch(playerData.ID);
                     getPlayer.then(function(player) {
                         console.log(player);
                         if(player != undefined) embed.addField("Player", player.username, true)
