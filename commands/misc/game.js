@@ -22,7 +22,8 @@ module.exports = {
         {
             game = 
             {
-                started: false
+                started: false,
+                playersAlive: []
             }
         }
 
@@ -63,13 +64,12 @@ function StartGame(message, game, players)
     {
         message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
         game.started = true;
+        game.playersAlive = players;
 
         for (const [id, targetID] of Object.entries(players)) 
         {
             let player = message.client.users.cache.get(id);
             if(player === undefined) continue;
-            console.log("sent dm to");
-            console.log(player.username);
             player.send("Test").then(() => 
             {
                 if (message.channel.type === "dm") return;

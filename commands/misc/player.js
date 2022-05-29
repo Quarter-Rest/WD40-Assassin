@@ -36,7 +36,7 @@ module.exports = {
 
             if(!(user.id in players))
             {
-                players[user.id] = null;
+                players[user.id] = {target: null, alive: true};
                 nconf.set('players', players);
                 message.channel.send("Added.");
                 save = true;
