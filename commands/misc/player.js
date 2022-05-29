@@ -88,10 +88,10 @@ module.exports = {
             let embed = new MessageEmbed()
             .setColor('#0099ff')
 			.setTitle('Players');
-            
+
             for (const [id, targetID] of Object.entries(players)) 
             {
-                embed.addField("Player", message.client.users.cache.get(key).username, true)
+                embed.addField("Player", message.client.users.cache.get(id).username, true)
             }
 
             message.channel.send({embeds: [embed]});
