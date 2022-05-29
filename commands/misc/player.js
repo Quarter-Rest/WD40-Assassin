@@ -101,13 +101,11 @@ module.exports = {
                 .setColor('#0099ff')
                 .setTitle('Players');
 
-                for (const [id, data] of Object.entries(players)) 
-                {
-                    let player = message.client.users.cache.get(id);
-                    if(player === undefined) continue;
 
-                    embed.addField("Player", message.client.users.cache.get(id).username, true)
-                }
+                players.forEach(playerData => {
+                    let player = message.client.users.cache.get(playerData.ID);
+                    embed.addField("Player", player.username, true)
+                });
 
                 message.channel.send({embeds: [embed]});
             });
