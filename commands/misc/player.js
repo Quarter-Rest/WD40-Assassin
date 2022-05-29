@@ -24,7 +24,7 @@ module.exports = {
             }
 
             let players = {};
-            connection.query('SELECT * FROM `players`',
+            global.con.query('SELECT * FROM `players`',
                 function(err, results, fields) {
                     players = results;
                 }
@@ -40,7 +40,7 @@ module.exports = {
                 players[user.id] = {target: null, alive: true};
                 
                 let players = {};
-                connection.query('SELECT * FROM `players`',
+                global.con.query('SELECT * FROM `players`',
                     function(err, results, fields) {
                         console.log(results)
                         players = results;
