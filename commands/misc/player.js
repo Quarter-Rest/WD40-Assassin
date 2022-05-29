@@ -105,7 +105,7 @@ module.exports = {
                 players.forEach(playerData => {
                     let player = message.client.users.fetch(playerData.ID);
                     console.log(player);
-                    if(player != undefined) embed.addField("Player", player.username, true)
+                    if(player != undefined) embed.addField("Player", player.User.username, true)
                 });
 
                 message.channel.send({embeds: [embed]});
