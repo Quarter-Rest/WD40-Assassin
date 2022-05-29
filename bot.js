@@ -33,8 +33,8 @@ nconf.file({ file: './data.json' });
 // Save the configuration object to disk
 //
 nconf.save(function (err) {
-    fs.readFile('path/to/your/config.json', function (err, data) {
-    console.dir(JSON.parse(data.toString()))
+    fs.readFile('./data.json', function (err, data) {
+        console.dir(JSON.parse(data.toString()))
     });
 });
 
