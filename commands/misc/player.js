@@ -23,7 +23,7 @@ module.exports = {
                 return; // Do not proceed, there is no user.
             }
 
-            let players = {};
+            let players = [];
             global.con.query('SELECT * FROM `players`',
                 function(err, results, fields) {
                     players = results;
