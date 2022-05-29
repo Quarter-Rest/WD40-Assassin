@@ -1,5 +1,3 @@
-const JSONdb = require('simple-json-db');
-const db = new JSONdb('./data.json');
 const { MessageEmbed } = require('discord.js');
 module.exports = {
 	name: "player",
@@ -25,18 +23,31 @@ module.exports = {
                 return; // Do not proceed, there is no user.
             }
 
-            let players = db.get('players');
+            let players = {};
+            connection.query('SELECT * FROM `players`',
+                function(err, results, fields) {
+                    players = results;
+                }
+            );
+
             if(players === undefined)
             {
                 players = {};
             }
 
-            console.log(players);
-
             if(!(players[user.id]))
             {
                 players[user.id] = {target: null, alive: true};
-                db.set('players', JSON.stringify(players));
+                
+                let players = {};
+                connection.query('SELECT * FROM `players`',
+                    function(err, results, fields) {
+                        console.log(results)
+                        players = results;
+                        console.log(players)
+                    }
+                );
+
                 message.channel.send("Added.");
             }
             else
