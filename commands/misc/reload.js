@@ -6,6 +6,8 @@
 
 // "fs" declared is used in reloading command cache of the specified command.
 const fs = require("fs");
+const simpleGit = require("simple-git");
+const git = simpleGit.default();
 
 module.exports = {
 	name: "reload",
@@ -69,6 +71,10 @@ module.exports = {
 		];
 
 		// Tries Registering command again with new code.
+
+        git.checkout("master")
+        git.reset("hard", ["origin/master"]);
+        git.pull();
 
 		try {
 			/**
