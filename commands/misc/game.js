@@ -35,7 +35,7 @@ module.exports = {
             }
             else
             {
-                message.channel.send(" <@${global.roleID}>. Starting game. Sending all current players a target in their DM's.")
+                message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
                 game.started = true;
 
                 players.forEach(id => {
