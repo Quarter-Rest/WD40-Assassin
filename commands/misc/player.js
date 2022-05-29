@@ -8,7 +8,7 @@ module.exports = {
 	execute(message, args) 
     {
         const commandType = args[0].toLowerCase();
-        const save = false;
+        let save = false;
 
         nconf.use('file', { file: './data.json' });
         nconf.load();
