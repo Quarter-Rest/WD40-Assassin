@@ -48,7 +48,7 @@ module.exports = {
                 players = [];
             }
 
-            let embed = new MessageEmbed()
+            let embed = new Discord.MessageEmbed()
 			.setTitle('Players');
 
             players.forEach(id => {
