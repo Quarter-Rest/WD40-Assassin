@@ -25,7 +25,7 @@ module.exports = {
                 return; // Do not proceed, there is no user.
             }
 
-            let players = db.get('players');
+            let players = JSON.parse(db.get('players'));
             if(players === undefined)
             {
                 players = {};
