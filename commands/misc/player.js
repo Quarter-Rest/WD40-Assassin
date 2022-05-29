@@ -23,14 +23,13 @@ module.exports = {
                 return; // Do not proceed, there is no user.
             }
 
-            let players = [];
             global.con.query('SELECT * FROM `players`',
                 function(err, results, fields) {
-                    players = results;
+                    let players = results;
                     console.log(players);
 
                     const isFound = players.some(element => {
-                        if (element.id === user.id) {
+                        if (element.ID === user.id) {
                             return true;
                         }
                         
