@@ -101,6 +101,7 @@ module.exports = {
                 .setColor('#0099ff')
                 .setTitle('Players');
 
+                // We are using fetch because we wanna make sure all users are valid
                 const promises = [];
                 players.forEach(playerData => {
                     let getPlayer = message.client.users.fetch(playerData.ID);
@@ -109,7 +110,8 @@ module.exports = {
                     });
                     promises.push(getPlayer);
                 });
-
+                
+                // Once all the users are got, we can send the message.
                 Promise.all(promises).then(() => {
                     message.channel.send({embeds: [embed]});
                 });
