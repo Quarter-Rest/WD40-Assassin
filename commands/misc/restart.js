@@ -1,4 +1,6 @@
+const { owner } = require("./config.json");
 module.exports = {
+
 	name: "restart",
 
 	/** You need to uncomment below properties if you need them. */
@@ -6,7 +8,7 @@ module.exports = {
 	//usage: 'put usage here',
 	//permissions: 'ADMINISTRATOR',
 	//guildOnly: true,
-
+    
 	execute(message, args) {
         if (message.author.id === owner)
         {
