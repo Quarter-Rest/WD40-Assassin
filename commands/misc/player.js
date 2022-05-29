@@ -26,7 +26,9 @@ module.exports = {
             let players = {};
             global.con.query('SELECT * FROM `players`',
                 function(err, results, fields) {
+                    console.log(results)
                     players = results;
+                    console.log(players)
                 }
             );
 
@@ -38,16 +40,7 @@ module.exports = {
             if(!(players[user.id]))
             {
                 players[user.id] = {target: null, alive: true};
-                
-                let players = {};
-                global.con.query('SELECT * FROM `players`',
-                    function(err, results, fields) {
-                        console.log(results)
-                        players = results;
-                        console.log(players)
-                    }
-                );
-
+                    // set db
                 message.channel.send("Added.");
             }
             else
