@@ -15,11 +15,7 @@ module.exports = {
 
         const commandType = args[0].toLowerCase();
 
-        nconf.file('./data.json');
-        nconf.load();
-        require('fs').readFile('./data.json', function (err, data) {
-            console.dir(JSON.parse(data.toString()))
-        });
+        nconf.add('data', { type: 'file', file: './data.json' });
 
         if(commandType == "add")
         {

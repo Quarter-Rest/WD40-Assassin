@@ -14,8 +14,8 @@ module.exports = {
 
         const commandType = args[0].toLowerCase();
 
-        nconf.file('./data.json');
-        nconf.load();
+        nconf.add('data', { type: 'file', file: './data.json' });
+        
         let players = nconf.get('players');
         let game = nconf.get('game');
         if(game === undefined)
