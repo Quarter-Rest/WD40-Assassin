@@ -25,7 +25,7 @@ module.exports = {
                 return; // Do not proceed, there is no user.
             }
 
-            let players = JSON.parse(db.get('players'));
+            let players = db.get('players');
             if(players === undefined)
             {
                 players = {};
@@ -33,7 +33,7 @@ module.exports = {
 
             console.log(players);
 
-            if(!(user.id in players))
+            if(!(players[user.id]))
             {
                 players[user.id] = {target: null, alive: true};
                 db.set('players', JSON.stringify(players));
