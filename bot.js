@@ -10,7 +10,7 @@ const fs = require("fs");
 const { Client, Collection, Intents } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const { token, client_id, test_guild_id } = require("./config.json");
+const { token, owner, client_id, test_guild_id } = require("./config.json");
 
 /**
  * From v13, specifying the intents is compulsory.

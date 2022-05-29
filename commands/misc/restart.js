@@ -4,10 +4,17 @@ module.exports = {
 	/** You need to uncomment below properties if you need them. */
 	//description: 'Ping!',
 	//usage: 'put usage here',
-	permissions: 'ADMINISTRATOR',
+	//permissions: 'ADMINISTRATOR',
 	//guildOnly: true,
 
 	execute(message, args) {
-		message.channel.send({ content: "Restart test" });
+        if (message.author.id === owner)
+        {
+		    message.channel.send({ content: "Restart test" });
+        }
+        else 
+        {
+            message.channel.send({ content: "You can not do this." });
+        }
 	},
 };
