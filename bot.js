@@ -10,7 +10,7 @@ const fs = require("fs");
 const { Client, Collection, Intents } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const { token, owner, client_id, test_guild_id } = require("./config.json");
+const { token, owner, client_id, test_guild_id, mysql } = require("./config.json");
 const { createConnection } = require('mysql');
 global.adminIDs = [owner, "217103420073574401"];
 global.roleID = "980346316720857100";
@@ -26,7 +26,7 @@ const client = new Client({
 });
 
 // Prepare the mysql connection
-let con = createConnection(config.mysql);
+let con = createConnection(mysql);
 
 // Then we are going to connect to our MySQL database and we will test this on errors
 con.connect(err => {
