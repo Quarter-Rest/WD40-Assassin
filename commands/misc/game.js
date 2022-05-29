@@ -29,49 +29,18 @@ module.exports = {
 
         if(commandType == "start")
         {
-            if(game.started === true)
-            {
-                message.channel.send("A game already exists!")
-            }
-            else
-            {
-                message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
-                game.started = true;
-
-                players.forEach(id => {
-                    let player = message.client.users.cache.get(id);
-                    player.send("Test").then(() => {
-                        if (message.channel.type === "dm") return;
-                    })
-                    .catch((error) => {
-                        // On failing, throw error.
-                        console.error(
-                            `Could not send DM to ${player.tag}.\n`,
-                            error
-                        );
-    
-                        message.channel.send(`Could not send DM to ${player.tag}.\n`);
-                    });
-                }); 
-
-                nconf.set('game', game);
-                save = true;
-            }
+            StartGame(message);
         }
 
         if(commandType == "end")
         {
-            if(game.started === false)
-            {
-                message.channel.send("A game doesn't exist!")
-            }
-            else
-            {
-                message.channel.send("Ending game.")
-                game.started = false;
-                nconf.set('game', game);
-                save = true;
-            }
+            EndGame(message);
+        }
+
+        if(commandType == "restart")
+        {
+            EndGame(message);
+            StartGame(message);
         }
 
         if(save)
@@ -86,3 +55,50 @@ module.exports = {
         }
 	},
 };
+
+function StartGame(message)
+{
+    if(game.started === true)
+    {
+        message.channel.send("A game already exists!")
+    }
+    else
+    {
+        message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
+        game.started = true;
+
+        players.forEach(id => {
+            let player = message.client.users.cache.get(id);
+            player.send("Test").then(() => {
+                if (message.channel.type === "dm") return;
+            })
+            .catch((error) => {
+                // On failing, throw error.
+                console.error(
+                    `Could not send DM to ${player.tag}.\n`,
+                    error
+                );
+
+                message.channel.send(`Could not send DM to ${player.tag}.\n`);
+            });
+        }); 
+
+        nconf.set('game', game);
+        save = true;
+    }
+}
+
+function EndGame(message)
+{
+    if(game.started === false)
+    {
+        message.channel.send("A game doesn't exist!")
+    }
+    else
+    {
+        message.channel.send("Ending game.")
+        game.started = false;
+        nconf.set('game', game);
+        save = true;
+    }
+}
