@@ -21,6 +21,6 @@ module.exports = {
 	 */
 
 	execute(message, args) {
-		message.channel.send({ content: "Pong. pong pong..... goku" });
+		message.channel.send({ content: "Pong. a nother test..." });
 	},
 };
