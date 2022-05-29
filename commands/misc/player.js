@@ -24,8 +24,10 @@ module.exports = {
                 players = [];
             }
 
-            players.push(user);
+            players.push(user.id);
             nconf.set('players', players);
+
+            message.channel.send("Added.");
         }
 
         nconf.save(function (err) 
@@ -34,7 +36,6 @@ module.exports = {
                 message.channel.send(err.message);
                 return;
             }
-            message.channel.send('Configuration saved successfully.');
         });
 	},
 };
