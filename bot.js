@@ -25,6 +25,20 @@ const client = new Client({
 });
 
 /**********************************************************************/
+// Setup local JSON serialization
+var nconf = require('nconf');
+nconf.file({ file: './data.json' });
+
+//
+// Save the configuration object to disk
+//
+nconf.save(function (err) {
+    fs.readFile('path/to/your/config.json', function (err, data) {
+    console.dir(JSON.parse(data.toString()))
+    });
+});
+
+/**********************************************************************/
 // Below we will be making an event handler!
 
 /**

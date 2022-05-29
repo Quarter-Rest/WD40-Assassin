@@ -88,6 +88,9 @@ module.exports = {
 
             for (const [id, data] of Object.entries(players)) 
             {
+                let player = message.client.users.cache.get(id);
+                if(player === undefined) continue;
+                
                 embed.addField("Player", message.client.users.cache.get(id).username, true)
             }
 
