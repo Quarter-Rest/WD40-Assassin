@@ -23,7 +23,7 @@ module.exports = {
             game = 
             {
                 started: false,
-                playersAlive: []
+                playersAlive: {}
             }
         }
 

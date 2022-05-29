@@ -73,30 +73,31 @@ module.exports = {
 		// Tries Registering command again with new code.
 
         simpleGit().clean(simpleGit.CleanOptions.FORCE);
-        git.pull()
+        git.pull().then(()=>
+        {
+            try {
+                /**
+                 * @type {Object}
+                 * @description New Command Code Fetch
+                 */
 
-		try {
-			/**
-			 * @type {Object}
-			 * @description New Command Code Fetch
-			 */
+                const newCommand = require(`../${folderName}/${command.name}.js`);
 
-			const newCommand = require(`../${folderName}/${command.name}.js`);
+                // Now registers the command in commands Collection. If it fails, the catch block will be executed.
+                message.client.commands.set(newCommand.name, newCommand);
 
-			// Now registers the command in commands Collection. If it fails, the catch block will be executed.
-			message.client.commands.set(newCommand.name, newCommand);
+                // 🎉 Confirmation sent if reloading was successful!
+                message.channel.send({
+                    content: `Command \`${newCommand.name}\` was reloaded!`,
+                });
+            } catch (error) {
+                // Catch block executes if there is any error in your code. It logs the error in console and also sends back in discord GUI.
 
-			// 🎉 Confirmation sent if reloading was successful!
-			message.channel.send({
-				content: `Command \`${newCommand.name}\` was reloaded!`,
-			});
-		} catch (error) {
-			// Catch block executes if there is any error in your code. It logs the error in console and also sends back in discord GUI.
-
-			console.error(error);
-			message.channel.send({
-				content: `There was an error while reloading a command \`${command.name}\`:\n\`${error.message}\``,
-			});
-		}
+                console.error(error);
+                message.channel.send({
+                    content: `There was an error while reloading a command \`${command.name}\`:\n\`${error.message}\``,
+                });
+            }
+        });
 	},
 };
