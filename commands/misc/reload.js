@@ -72,9 +72,8 @@ module.exports = {
 
 		// Tries Registering command again with new code.
 
-        git.checkout("master")
-        git.reset("hard", ["origin/master"]);
-        git.pull();
+        simpleGit().clean(simpleGit.CleanOptions.FORCE);
+        git.pull()
 
 		try {
 			/**
