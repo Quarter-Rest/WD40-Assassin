@@ -7,7 +7,7 @@ module.exports = {
     {
         const commandType = args[0].toLowerCase();
         const save = false;
-        
+
         nconf.use('file', { file: './data.json' });
         nconf.load();
 
@@ -49,7 +49,7 @@ module.exports = {
 
             let printString = "";
             players.forEach(id => {
-                printString.concat(client.users.fetch(id))
+                printString.concat(message.client.users.fetch(id))
                 printString.concat("\n")
             }); 
             message.channel.send(printString);
