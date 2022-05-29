@@ -101,13 +101,16 @@ module.exports = {
                 .setColor('#0099ff')
                 .setTitle('Players');
 
-
+                const promises = [];
                 players.forEach(playerData => {
                     let getPlayer = message.client.users.fetch(playerData.ID);
                     getPlayer.then(function(player) {
                         embed.addField("Player", player.username, true)
                     });
-                }).then(() =>{
+                    promises.push(getPlayer);
+                });
+
+                Promise.all(promises).then(() => {
                     message.channel.send({embeds: [embed]});
                 });
             });
