@@ -89,7 +89,7 @@ module.exports = {
             .setColor('#0099ff')
 			.setTitle('Players');
 
-            for (const [id, targetID] of Object.entries(players)) 
+            for (const [id, data] of Object.entries(players)) 
             {
                 embed.addField("Player", message.client.users.cache.get(id).username, true)
             }
