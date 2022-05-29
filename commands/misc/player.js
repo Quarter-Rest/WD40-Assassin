@@ -26,9 +26,7 @@ module.exports = {
             let players = {};
             global.con.query('SELECT * FROM `players`',
                 function(err, results, fields) {
-                    console.log(results)
                     players = results;
-                    console.log(players)
                 }
             );
 
@@ -39,9 +37,14 @@ module.exports = {
 
             if(!(players[user.id]))
             {
-                players[user.id] = {target: null, alive: true};
-                    // set db
-                message.channel.send("Added.");
+                global.con.query(`INSERT INTO players (ID, TARGET, ALIVE) values (${user.id}, '0', true)`, (err, row) => {
+                    // Return if there is an error
+                    if (err) {
+                        message.channel.send("Failed");
+                        return console.log(err);
+                    }
+                    else message.channel.send(`Added ${user.username}.`);
+                });
             }
             else
             {
