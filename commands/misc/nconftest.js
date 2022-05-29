@@ -4,13 +4,11 @@ module.exports = {
 
 	execute(message, args) 
     {
-        nconf.use('file', { file: './config.json' });
+        nconf.use('file', { file: './data.json' });
         nconf.load();
         nconf.set('name', 'Avian');
-        nconf.set('dessert:name', 'Ice Cream');
-        nconf.set('dessert:flavor', 'chocolate');
 
-        message.channel.send(nconf.get('dessert'));
+        message.channel.send(nconf.get('name'));
 
         nconf.save(function (err) 
         {
