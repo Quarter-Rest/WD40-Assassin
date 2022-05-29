@@ -13,7 +13,6 @@ module.exports = {
         }
 
         const commandType = args[0].toLowerCase();
-        let save = false;
 
         nconf.use('file', { file: './data.json' });
         nconf.load();
@@ -29,34 +28,32 @@ module.exports = {
 
         if(commandType == "start")
         {
-            StartGame(message, game);
+            StartGame(message, game, players);
         }
 
         if(commandType == "end")
         {
-            EndGame(message, game);
+            EndGame(message, game, players);
         }
 
         if(commandType == "restart")
         {
-            EndGame(message, game);
-            StartGame(message, game);
+            EndGame(message, game, players);
+            StartGame(message, game, players);
         }
 
-        if(save)
+        nconf.save(function (err) 
         {
-            nconf.save(function (err) 
-            {
-                if (err) {
-                    message.channel.send(err.message);
-                    return;
-                }
-            });
-        }
+            if (err) {
+                message.channel.send(err.message);
+                return;
+            }
+        });
+        
 	},
 };
 
-function StartGame(message, game)
+function StartGame(message, game, players)
 {
     if(game.started === true)
     {
@@ -84,7 +81,6 @@ function StartGame(message, game)
         }); 
 
         nconf.set('game', game);
-        save = true;
     }
 }
 
@@ -99,6 +95,5 @@ function EndGame(message, game)
         message.channel.send("Ending game.")
         game.started = false;
         nconf.set('game', game);
-        save = true;
     }
 }
