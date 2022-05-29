@@ -6,20 +6,20 @@ module.exports = {
 	execute(message, args) 
     {
         const commandType = args[0].toLowerCase();
-        const user = message.mentions.users.first();
         const save = false;
-
-        if (user === undefined) 
-        {
-            message.channel.send("That is not a valid user.");
-            return; // Do not proceed, there is no user.
-        }
-
+        
         nconf.use('file', { file: './data.json' });
         nconf.load();
 
         if(commandType == "add")
         {
+            const user = message.mentions.users.first();
+            if (user === undefined) 
+            {
+                message.channel.send("That is not a valid user.");
+                return; // Do not proceed, there is no user.
+            }
+
             let players = nconf.get('players');
             if(players === undefined)
             {
