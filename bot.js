@@ -11,7 +11,7 @@ const { Client, Collection, Intents } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const { token, owner, client_id, test_guild_id } = require("./config.json");
-const mongo = require('./mongo.js')
+const { createConnection } = require('mysql');
 global.adminIDs = [owner, "217103420073574401"];
 global.roleID = "980346316720857100";
 
@@ -23,6 +23,18 @@ global.roleID = "980346316720857100";
 const client = new Client({
 	// Please add all intents you need, more detailed information @ https://ziad87.net/intents/
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
+
+// Prepare the mysql connection
+let con = createConnection(config.mysql);
+
+// Then we are going to connect to our MySQL database and we will test this on errors
+con.connect(err => {
+    // Console log if there is an error
+    if (err) return console.log(err);
+
+    // No error found?
+    console.log(`MySQL has been connected!`);
 });
 
 /**********************************************************************/
