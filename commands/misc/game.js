@@ -22,9 +22,9 @@ module.exports = {
         if(game === undefined)
         {
             game = 
-            [
-                ["started"] = false
-            ];
+            {
+                started: false
+            }
         }
 
         if(commandType == "start")
