@@ -17,6 +17,9 @@ module.exports = {
 
         nconf.file('./data.json');
         nconf.load();
+        fs.readFile('./data.json', function (err, data) {
+            console.dir(JSON.parse(data.toString()))
+        });
 
         if(commandType == "add")
         {
