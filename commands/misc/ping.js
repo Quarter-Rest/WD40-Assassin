@@ -21,6 +21,6 @@ module.exports = {
 	 */
 
 	execute(message, args) {
-		message.channel.send({ content: "Pong. Github works. test" });
+		message.channel.send({ content: "Pong." });
 	},
 };

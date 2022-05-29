@@ -7,7 +7,7 @@
 // For now, the only available property is name array. Not making the name array will result in an error.
 
 module.exports = {
-	name: [],
+	name: ["your", "trigger", "words", "in", "array"],
 
 	/**
 	 * @description Executes when it is triggered by trigger handler.
