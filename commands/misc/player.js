@@ -55,7 +55,7 @@ module.exports = {
 
             players.forEach(id => {
                 console.log(message.client.users.cache.get(id).username)
-                embed.addField(Player, message.client.users.cache.get(id).username, true)
+                embed.addField("Player", message.client.users.cache.get(id).username, true)
             }); 
             message.channel.send({embeds: [embed]});
         }
