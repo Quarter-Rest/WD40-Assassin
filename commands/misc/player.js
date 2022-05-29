@@ -1,4 +1,5 @@
 var nconf = require('nconf');
+const { MessageEmbed } = require('discord.js');
 module.exports = {
 	name: "player",
     aliases: "players",
@@ -48,7 +49,8 @@ module.exports = {
                 players = [];
             }
 
-            let embed = new Discord.MessageEmbed()
+            let embed = new MessageEmbed()
+            .setColor('#0099ff')
 			.setTitle('Players');
 
             players.forEach(id => {
