@@ -7,6 +7,12 @@ module.exports = {
 
 	execute(message, args) 
     {
+        if (global.adminIDs.includes(message.author.id) == false)
+        {
+            message.channel.send("You can't do this.")
+            return;
+        }
+        
         const commandType = args[0].toLowerCase();
         let save = false;
 

@@ -6,16 +6,30 @@ module.exports = {
 
 	execute(message, args) 
     {
+        if (global.adminIDs.includes(message.author.id) == false)
+        {
+            message.channel.send("You can't do this.")
+            return;
+        }
+        
         const commandType = args[0].toLowerCase();
         let save = false;
 
         nconf.use('file', { file: './data.json' });
         nconf.load();
         let players = nconf.get('players');
+        let game = nconf.get('game');
 
         if(commandType == "start")
         {
-            message.channel.send("Starting a game.")
+            if(game.started)
+            {
+                message.channel.send("A game already exists!")
+            }
+            else
+            {
+
+            }
         }
 
         if(save)
