@@ -3,7 +3,7 @@
  * @author Naman Vrati
  * @since 1.0.0
  */
-
+const mongo = require('./util/mongo')
 module.exports = {
 	name: "ready",
 	once: true,
@@ -14,5 +14,7 @@ module.exports = {
 	 */
 	execute(client) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
+
+        await mongo()
 	},
 };
