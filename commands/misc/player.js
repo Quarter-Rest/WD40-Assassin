@@ -15,7 +15,7 @@ module.exports = {
 
         const commandType = args[0].toLowerCase();
 
-        nconf.use('file', { file: './data.json' });
+        nconf.use('memory');
         nconf.load();
 
         if(commandType == "add")
@@ -90,7 +90,7 @@ module.exports = {
             {
                 let player = message.client.users.cache.get(id);
                 if(player === undefined) continue;
-                
+
                 embed.addField("Player", message.client.users.cache.get(id).username, true)
             }
 
