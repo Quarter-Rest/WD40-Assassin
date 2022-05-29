@@ -68,7 +68,8 @@ function StartGame(message, game, players)
         {
             let player = message.client.users.cache.get(id);
             if(player === undefined) continue;
-            
+            console.log("sent dm to");
+            console.log(player.username);
             player.send("Test").then(() => 
             {
                 if (message.channel.type === "dm") return;
