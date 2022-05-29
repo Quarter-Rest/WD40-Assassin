@@ -3,7 +3,7 @@
  * @author Naman Vrati
  * @since 1.0.0
  */
-const mongo = require('./util/mongo')
+const mongo = require('../mongo.js')
 module.exports = {
 	name: "ready",
 	once: true,
