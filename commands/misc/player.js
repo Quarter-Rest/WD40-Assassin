@@ -47,7 +47,7 @@ module.exports = {
                 players = [];
             }
 
-            let printString = "";
+            let printString = "Players:\n";
             players.forEach(id => {
                 printString.concat(message.client.users.fetch(id))
                 printString.concat("\n")
