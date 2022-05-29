@@ -80,7 +80,7 @@ function StartGame(message, game, players)
             
             targetName = message.client.users.cache.get(randomPlayerID).username;
 
-            player.send(`Target test: ${targetName}`).then(() => 
+            player.send(`Target: ${targetName}`).then(() => 
             {
                 if (message.channel.type === "dm") return;
             })
