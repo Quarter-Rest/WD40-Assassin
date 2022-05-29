@@ -7,6 +7,8 @@ module.exports = {
     {
         const commandType = args[0].toLowerCase();
         const user = message.mentions.users.first();
+        const save = false;
+
         if (user === undefined) 
         {
             message.channel.send("That is not a valid user.");
@@ -24,18 +26,44 @@ module.exports = {
                 players = [];
             }
 
-            players.push(user.id);
-            nconf.set('players', players);
-
-            message.channel.send("Added.");
+            if(players.includes(user.id) === false)
+            {
+                players.push(user.id);
+                nconf.set('players', players);
+                message.channel.send("Added.");
+                save = true;
+            }
+            else
+            {
+                message.channel.send("That player is already in the game.");
+            }
         }
 
-        nconf.save(function (err) 
+        if(commandType == "get")
         {
-            if (err) {
-                message.channel.send(err.message);
-                return;
+            let players = nconf.get('players');
+            if(players === undefined)
+            {
+                players = [];
             }
-        });
+
+            let printString = "";
+            players.forEach(id => {
+                printString.concat(client.users.fetch(id))
+                printString.concat("\n")
+            }); 
+            message.channel.send(printString);
+        }
+
+        if(save)
+        {
+            nconf.save(function (err) 
+            {
+                if (err) {
+                    message.channel.send(err.message);
+                    return;
+                }
+            });
+        }
 	},
 };
