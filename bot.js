@@ -26,10 +26,10 @@ const client = new Client({
 });
 
 // Prepare the mysql connection
-let con = createConnection(mysql);
+global.con = createConnection(mysql);
 
 // Then we are going to connect to our MySQL database and we will test this on errors
-con.connect(err => {
+global.con.connect(err => {
     // Console log if there is an error
     if (err) return console.log(err);
 
