@@ -35,12 +35,23 @@ module.exports = {
             }
             else
             {
-                message.channel.send("Starting game.")
+                message.channel.send("Starting game. Sending all current players a target in their DM's.")
                 game.started = true;
 
                 players.forEach(id => {
-                    console.log(message.client.users.cache.get(id));
-                    message.client.users.cache.get(id).send("Test");
+                    let player = message.client.users.cache.get(id);
+                    player.send("Test").then(() => {
+                        if (message.channel.type === "dm") return;
+                    })
+                    .catch((error) => {
+                        // On failing, throw error.
+                        console.error(
+                            `Could not send DM to ${player.tag}.\n`,
+                            error
+                        );
+    
+                        message.channel.send(`Could not send DM to ${player.tag}.\n`);
+                    });
                 }); 
 
                 nconf.set('game', game);
