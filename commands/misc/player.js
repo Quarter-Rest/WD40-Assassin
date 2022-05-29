@@ -59,6 +59,8 @@ module.exports = {
                 return;
             }
 
+            console.log(players);
+
             if(user.id in players)
             {
                 delete players[user.id];
