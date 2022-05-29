@@ -64,12 +64,15 @@ function StartGame(message, game, players)
         message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
         game.started = true;
 
-        players.forEach(id => {
+        for (const [id, targetID] of Object.entries(players)) 
+        {
             let player = message.client.users.cache.get(id);
-            player.send("Test").then(() => {
+            player.send("Test").then(() => 
+            {
                 if (message.channel.type === "dm") return;
             })
-            .catch((error) => {
+            .catch((error) => 
+            {
                 // On failing, throw error.
                 console.error(
                     `Could not send DM to ${player.tag}.\n`,
@@ -78,7 +81,7 @@ function StartGame(message, game, players)
 
                 message.channel.send(`Could not send DM to ${player.tag}.\n`);
             });
-        }); 
+        }
 
         nconf.set('game', game);
     }
