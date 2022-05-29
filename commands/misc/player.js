@@ -14,7 +14,6 @@ module.exports = {
         }
 
         const commandType = args[0].toLowerCase();
-        let save = false;
 
         nconf.use('file', { file: './data.json' });
         nconf.load();
@@ -39,7 +38,6 @@ module.exports = {
                 players[user.id] = {target: null, alive: true};
                 nconf.set('players', players);
                 message.channel.send("Added.");
-                save = true;
             }
             else
             {
@@ -69,7 +67,6 @@ module.exports = {
 
                 nconf.set('players', players);
                 message.channel.send("Removed.");
-                save = true;
             }
             else
             {
@@ -98,15 +95,13 @@ module.exports = {
             message.channel.send({embeds: [embed]});
         }
 
-        if(save)
+        nconf.save(function (err) 
         {
-            nconf.save(function (err) 
-            {
-                if (err) {
-                    message.channel.send(err.message);
-                    return;
-                }
-            });
-        }
+            if (err) {
+                message.channel.send(err.message);
+                return;
+            }
+        });
+        
 	},
 };
