@@ -17,7 +17,7 @@ module.exports = {
 
         nconf.file('./data.json');
         nconf.load();
-        require(fs).readFile('./data.json', function (err, data) {
+        require('fs').readFile('./data.json', function (err, data) {
             console.dir(JSON.parse(data.toString()))
         });
 
