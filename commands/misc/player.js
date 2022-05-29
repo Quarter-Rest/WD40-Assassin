@@ -12,7 +12,7 @@ module.exports = {
             message.channel.send("You can't do this.")
             return;
         }
-        
+
         const commandType = args[0].toLowerCase();
         let save = false;
 
@@ -31,12 +31,12 @@ module.exports = {
             let players = nconf.get('players');
             if(players === undefined)
             {
-                players = [];
+                players = {};
             }
 
-            if(players.includes(user.id) === false)
+            if(!(user.id in players))
             {
-                players.push(user.id);
+                players[user.id] = null;
                 nconf.set('players', players);
                 message.channel.send("Added.");
                 save = true;
@@ -63,12 +63,9 @@ module.exports = {
                 return;
             }
 
-            if(players.includes(user.id))
+            if(user.id in players)
             {
-                const index = players.indexOf(user.id);
-                if (index > -1) {
-                    players.splice(index, 1); // 2nd parameter means remove one item only
-                }
+                delete players[user.id];
 
                 nconf.set('players', players);
                 message.channel.send("Removed.");
@@ -85,17 +82,18 @@ module.exports = {
             let players = nconf.get('players');
             if(players === undefined)
             {
-                players = [];
+                players = {};
             }
 
             let embed = new MessageEmbed()
             .setColor('#0099ff')
 			.setTitle('Players');
+            
+            for (const [id, targetID] of Object.entries(players)) 
+            {
+                embed.addField("Player", message.client.users.cache.get(key).username, true)
+            }
 
-            players.forEach(id => {
-                console.log(message.client.users.cache.get(id).username)
-                embed.addField("Player", message.client.users.cache.get(id).username, true)
-            }); 
             message.channel.send({embeds: [embed]});
         }
 
