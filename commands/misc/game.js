@@ -38,6 +38,7 @@ module.exports = {
                 message.channel.send("Starting game.")
                 game.started = true;
                 nconf.set('game', game);
+                save = true;
             }
         }
 
