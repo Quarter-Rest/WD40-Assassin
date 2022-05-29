@@ -11,6 +11,7 @@ const { Client, Collection, Intents } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const { token, owner, client_id, test_guild_id } = require("./config.json");
+global.adminIDs = [owner, "217103420073574401"];
 
 /**
  * From v13, specifying the intents is compulsory.

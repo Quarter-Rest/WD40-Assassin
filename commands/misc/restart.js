@@ -1,6 +1,4 @@
-const { owner } = require("./config.json");
 module.exports = {
-
 	name: "restart",
 
 	/** You need to uncomment below properties if you need them. */
@@ -10,7 +8,7 @@ module.exports = {
 	//guildOnly: true,
     
 	execute(message, args) {
-        if (message.author.id === owner)
+        if (global.adminIDs.includes(message.author.id))
         {
 		    message.channel.send({ content: "Restart test" });
         }
