@@ -66,11 +66,23 @@ function StartGame(message, game, players)
         game.started = true;
         game.playersAlive = players;
 
-        for (const [id, targetID] of Object.entries(players)) 
+        for (const [id, data] of Object.entries(players)) 
         {
+            // Set player alive
+            data.alive = true;
+
             let player = message.client.users.cache.get(id);
             if(player === undefined) continue;
-            player.send("Test").then(() => 
+            let targetName = "error send griffon a dm";
+
+            var randomPlayer = function (players) {
+                var keys = Object.keys(players);
+                return players[keys[ keys.length * Math.random() << 0]];
+            };
+
+            targetName = message.client.users.cache.get(randomPlayer.id).username;
+
+            player.send(`Target: ${targetName}`).then(() => 
             {
                 if (message.channel.type === "dm") return;
             })
