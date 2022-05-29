@@ -56,7 +56,7 @@ module.exports = {
 	},
 };
 
-function StartGame(message)
+function StartGame(message, game)
 {
     if(game.started === true)
     {
