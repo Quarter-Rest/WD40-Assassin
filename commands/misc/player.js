@@ -27,34 +27,33 @@ module.exports = {
             global.con.query('SELECT * FROM `players`',
                 function(err, results, fields) {
                     players = results;
+                    console.log(players);
+
+                    const isFound = players.some(element => {
+                        if (element.id === user.id) {
+                            return true;
+                        }
+                        
+                        return false;
+                    });
+
+                    if(isFound === false)
+                    {
+                        global.con.query(`INSERT INTO players (ID, TARGET, ALIVE) values (${user.id}, '0', true)`, (err, row) => {
+                            // Return if there is an error
+                            if (err) {
+                                message.channel.send("Failed");
+                                return console.log(err);
+                            }
+                            else message.channel.send(`Added ${user.username}.`);
+                        });
+                    }
+                    else
+                    {
+                        message.channel.send("That player is already in the game.");
+                    }
                 }
             );
-
-            console.log(players);
-
-            const isFound = players.some(element => {
-                if (element.id === user.id) {
-                    return true;
-                }
-                
-                return false;
-            });
-
-            if(isFound === false)
-            {
-                global.con.query(`INSERT INTO players (ID, TARGET, ALIVE) values (${user.id}, '0', true)`, (err, row) => {
-                    // Return if there is an error
-                    if (err) {
-                        message.channel.send("Failed");
-                        return console.log(err);
-                    }
-                    else message.channel.send(`Added ${user.username}.`);
-                });
-            }
-            else
-            {
-                message.channel.send("That player is already in the game.");
-            }
         }
 
         if(commandType == "remove")
