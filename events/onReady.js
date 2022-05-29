@@ -12,7 +12,7 @@ module.exports = {
 	 * @description Executes the block of code when client is ready (bot initialization)
 	 * @param {import("discord.js").Client} client Main Application Client
 	 */
-	execute(client) {
+	async execute(client) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 
         await mongo()
