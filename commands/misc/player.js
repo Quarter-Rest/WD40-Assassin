@@ -76,7 +76,7 @@ module.exports = {
 
                 if(isFound)
                 {
-                    global.con.query(`DELETE FROM 'players' WHERE 'ID' = ${user.id};`, (err, row) => {
+                    global.con.query(`DELETE FROM players WHERE ID = ${user.id}`, (err, row) => {
                         // Return if there is an error
                         if (err) {
                             message.channel.send("Failed");
