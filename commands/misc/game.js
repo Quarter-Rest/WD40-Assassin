@@ -29,7 +29,7 @@ module.exports = {
 
         if(commandType == "start")
         {
-            if(game.started != undefined && game.started === true)
+            if(game.started === true)
             {
                 message.channel.send("A game already exists!")
             }
@@ -37,6 +37,26 @@ module.exports = {
             {
                 message.channel.send("Starting game.")
                 game.started = true;
+
+                players.forEach(id => {
+                    message.client.users.cache.get(id).send("Test");
+                }); 
+
+                nconf.set('game', game);
+                save = true;
+            }
+        }
+
+        if(commandType == "end")
+        {
+            if(game.started === false)
+            {
+                message.channel.send("A game doesn't exist!")
+            }
+            else
+            {
+                message.channel.send("Ending game.")
+                game.started = false;
                 nconf.set('game', game);
                 save = true;
             }
