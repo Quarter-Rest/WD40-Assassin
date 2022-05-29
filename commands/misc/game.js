@@ -67,6 +67,8 @@ function StartGame(message, game, players)
         for (const [id, targetID] of Object.entries(players)) 
         {
             let player = message.client.users.cache.get(id);
+            if(player === undefined) continue;
+            
             player.send("Test").then(() => 
             {
                 if (message.channel.type === "dm") return;
