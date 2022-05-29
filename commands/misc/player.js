@@ -26,7 +26,6 @@ module.exports = {
             global.con.query('SELECT * FROM `players`',
                 function(err, results, fields) {
                     let players = results;
-                    console.log(players);
 
                     const isFound = players.some(element => {
                         if (element.ID === user.id) {
@@ -64,24 +63,33 @@ module.exports = {
                 return; // Do not proceed, there is no user.
             }
 
-            let players = db.get('players');
-            if(players === undefined)
-            {
-                message.channel.send("No players.");
-                return;
-            }
+            global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+                let players = results;
 
-            if(user.id in players)
-            {
-                delete players[user.id];
+                const isFound = players.some(element => {
+                    if (element.ID === user.id) {
+                        return true;
+                    }
+                    
+                    return false;
+                });
 
-                db.set('players', JSON.stringify(players));
-                message.channel.send("Removed.");
-            }
-            else
-            {
-                message.channel.send("That player is not in the game.");
-            }
+                if(isFound)
+                {
+                    global.con.query(`DELETE FROM 'players' WHERE 'ID' = ${user.id};`, (err, row) => {
+                        // Return if there is an error
+                        if (err) {
+                            message.channel.send("Failed");
+                            return console.log(err);
+                        }
+                        else message.channel.send(`Removed ${user.username}.`);
+                    });
+                }
+                else
+                {
+                    message.channel.send("That player is not in the game.");
+                }
+            });
         }
 
         if(commandType == "get")
