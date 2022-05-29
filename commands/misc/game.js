@@ -23,13 +23,13 @@ module.exports = {
         {
             game = 
             [
-                started = false
+                ["started"] = false
             ];
         }
 
         if(commandType == "start")
         {
-            if(game.started != undefined && game.started)
+            if(game.started != undefined && game.started === true)
             {
                 message.channel.send("A game already exists!")
             }
