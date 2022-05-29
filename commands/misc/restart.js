@@ -1,5 +1,5 @@
 module.exports = {
-	name: "ping",
+	name: "restart",
 
 	/** You need to uncomment below properties if you need them. */
 	//description: 'Ping!',
