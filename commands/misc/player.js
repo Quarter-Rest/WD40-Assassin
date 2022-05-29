@@ -7,7 +7,8 @@ module.exports = {
     {
         const commandType = args[0].toLowerCase();
         const user = message.mentions.users.first();
-        if (user === undefined) {
+        if (user === undefined) 
+        {
             message.channel.send("That is not a valid user.");
             return; // Do not proceed, there is no user.
         }
@@ -18,6 +19,11 @@ module.exports = {
         if(commandType == "add")
         {
             let players = nconf.get('players');
+            if(players === undefined)
+            {
+                players = [];
+            }
+
             players.push(user);
             nconf.set('players', players);
         }
