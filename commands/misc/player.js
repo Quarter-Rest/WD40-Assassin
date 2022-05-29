@@ -1,4 +1,5 @@
-var nconf = require('nconf');
+const JSONdb = require('simple-json-db');
+const db = new JSONdb('./data.json');
 const { MessageEmbed } = require('discord.js');
 module.exports = {
 	name: "player",
@@ -15,8 +16,6 @@ module.exports = {
 
         const commandType = args[0].toLowerCase();
 
-        nconf.add('data', { type: 'file', file: './data.json' });
-
         if(commandType == "add")
         {
             const user = message.mentions.users.first();
@@ -26,7 +25,7 @@ module.exports = {
                 return; // Do not proceed, there is no user.
             }
 
-            let players = nconf.get('players');
+            let players = db.get('players');
             if(players === undefined)
             {
                 players = {};
@@ -35,7 +34,7 @@ module.exports = {
             if(!(user.id in players))
             {
                 players[user.id] = {target: null, alive: true};
-                nconf.set('players', players);
+                db.set('players', JSON.stringify(players));
                 message.channel.send("Added.");
             }
             else
@@ -53,7 +52,7 @@ module.exports = {
                 return; // Do not proceed, there is no user.
             }
 
-            let players = nconf.get('players');
+            let players = db.get('players');
             if(players === undefined)
             {
                 message.channel.send("No players.");
@@ -64,7 +63,7 @@ module.exports = {
             {
                 delete players[user.id];
 
-                nconf.set('players', players);
+                db.set('players', JSON.stringify(players));
                 message.channel.send("Removed.");
             }
             else
@@ -75,7 +74,7 @@ module.exports = {
 
         if(commandType == "get")
         {
-            let players = nconf.get('players');
+            let players = db.get('players');
             if(players === undefined)
             {
                 players = {};
@@ -95,14 +94,6 @@ module.exports = {
 
             message.channel.send({embeds: [embed]});
         }
-
-        nconf.save(function (err) 
-        {
-            if (err) {
-                message.channel.send(err.message);
-                return;
-            }
-        });
         
 	},
 };

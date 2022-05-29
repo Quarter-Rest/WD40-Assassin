@@ -1,4 +1,5 @@
-var nconf = require('nconf');
+const JSONdb = require('simple-json-db');
+const db = new JSONdb('./data.json');
 
 module.exports = {
 	name: "game",
@@ -14,10 +15,8 @@ module.exports = {
 
         const commandType = args[0].toLowerCase();
 
-        nconf.add('data', { type: 'file', file: './data.json' });
-        
-        let players = nconf.get('players');
-        let game = nconf.get('game');
+        let players = db.get('players');
+        let game = db.get('game');
         if(game === undefined)
         {
             game = 
@@ -42,14 +41,6 @@ module.exports = {
             EndGame(message, game, players);
             StartGame(message, game, players);
         }
-
-        nconf.save(function (err) 
-        {
-            if (err) {
-                message.channel.send(err.message);
-                return;
-            }
-        });
         
 	},
 };
@@ -96,7 +87,7 @@ function StartGame(message, game, players)
             });
         }
 
-        nconf.set('game', game);
+        db.set('game', JSON.stringify(game));
     }
 }
 
@@ -110,6 +101,6 @@ function EndGame(message, game)
     {
         message.channel.send("Ending game.")
         game.started = false;
-        nconf.set('game', game);
+        db.set('game', JSON.stringify(game));
     }
 }
