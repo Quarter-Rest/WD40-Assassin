@@ -75,11 +75,9 @@ function StartGame(message, game, players)
             if(player === undefined) continue;
             let targetName = "error send griffon a dm";
 
-            var randomPlayer = function (players) {
-                var keys = Object.keys(players);
-                return players[keys[ keys.length * Math.random() << 0]];
-            };
-
+            let keys = Object.keys(players);
+            let randomPlayer = players[keys[ keys.length * Math.random() << 0]];
+            
             console.log(randomPlayer);
 
             player.send(`Target: ${targetName}`).then(() => 
