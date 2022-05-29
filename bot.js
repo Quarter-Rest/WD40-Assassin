@@ -262,18 +262,3 @@ for (const folder of triggerFolders) {
 // Login into your client application with bot's token.
 
 client.login(token);
-
-// On program close, send a message. 
-process.on('SIGTERM', () => {
-	const random = Math.floor(Math.random() * sleepMessages.length);
-
-	client.guilds.cache.forEach((guild) => {
-		let embed = new MessageEmbed()
-			.setTitle("Stopping....\t")
-			.setDescription(sleepMessages[random]);
-
-		guild.systemChannel.send({embeds: [embed]})
-			.then(message => console.log(`Ready`))
-			.catch(console.error);
-	});
-});

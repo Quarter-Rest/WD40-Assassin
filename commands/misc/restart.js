@@ -10,8 +10,9 @@ module.exports = {
 	execute(message, args) {
         if (global.adminIDs.includes(message.author.id))
         {
-		    message.channel.send({ content: "Restarting..." });
-            process.exit();
+		    message.channel.send({ content: "Restarting..." }).then(() => {
+                process.exit();
+            })
         }
         else 
         {
