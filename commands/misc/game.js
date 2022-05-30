@@ -56,6 +56,7 @@ function StartGame(message, game, players)
         for (const [id, data] of Object.entries(players)) 
         {
             let player = message.client.users.cache.get(id);
+            console.log(player);
             if(player === undefined) {
                 message.channel.send("Caught an undefined player.")
                 continue;
