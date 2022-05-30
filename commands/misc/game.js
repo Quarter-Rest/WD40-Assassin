@@ -52,14 +52,12 @@ function StartGame(message, game, players)
     else
     {
         message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
-        console.log(players)
-        for (const [id, data] of Object.entries(players)) 
-        {
-            let player = message.client.users.cache.get(id);
+
+        players.forEach(element => {
+            let player = message.client.users.cache.get(element.id);
 
             if(player === undefined) {
-                message.channel.send("Caught an undefined player.")
-                continue;
+                message.channel.send("Caught an undefined player.");
             }
             let targetName = "error send griffon a dm";
 
@@ -91,7 +89,7 @@ function StartGame(message, game, players)
                     return console.log(err);
                 }
             });
-        }
+        });
 
         // Set game running
         global.con.query(`UPDATE game SET running = true`, (err, row) => {
