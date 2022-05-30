@@ -86,7 +86,6 @@ function StartGame(message, game, players)
                     message.channel.send("Failed");
                     return console.log(err);
                 }
-                else message.channel.send(`Added ${user.username}.`);
             });
         }
 
@@ -97,7 +96,6 @@ function StartGame(message, game, players)
                 message.channel.send("Failed");
                 return console.log(err);
             }
-            else message.channel.send(`Added ${user.username}.`);
         });
     }
 }
@@ -117,7 +115,6 @@ function EndGame(message, game)
                 message.channel.send("Failed");
                 return console.log(err);
             }
-            else message.channel.send(`Added ${user.username}.`);
         });
     }
 }
