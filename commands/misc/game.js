@@ -56,7 +56,10 @@ function StartGame(message, game, players)
         for (const [id, data] of Object.entries(players)) 
         {
             let player = message.client.users.cache.get(id);
-            if(player === undefined) continue;
+            if(player === undefined) {
+                message.channel.send("Caught an undefined player.")
+                continue;
+            }
             let targetName = "error send griffon a dm";
 
             let keys = Object.keys(players);
