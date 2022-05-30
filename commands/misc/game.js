@@ -18,8 +18,8 @@ module.exports = {
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
             let players = results;
 
-            global.con.query('SELECT * FROM `game`', function(err, results, fields) {
-                let game = results;
+            global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
+                let game = results1;
                 console.log(game);
 
                 if(commandType == "start")
