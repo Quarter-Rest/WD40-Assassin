@@ -51,8 +51,6 @@ function StartGame(message, game, players)
     else
     {
         message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
-        game.running = true;
-        game.playersAlive = players;
 
         for (const [id, data] of Object.entries(players)) 
         {
@@ -90,6 +88,16 @@ function StartGame(message, game, players)
                 else message.channel.send(`Added ${user.username}.`);
             });
         }
+
+        // Set game running
+        global.con.query(`UPDATE game SET running = true`, (err, row) => {
+            // Return if there is an error
+            if (err) {
+                message.channel.send("Failed");
+                return console.log(err);
+            }
+            else message.channel.send(`Added ${user.username}.`);
+        });
     }
 }
 
@@ -102,7 +110,13 @@ function EndGame(message, game)
     else
     {
         message.channel.send("Ending game.")
-        game.running = false;
-        db.set('game', JSON.stringify(game));
+        global.con.query(`UPDATE game SET running = false`, (err, row) => {
+            // Return if there is an error
+            if (err) {
+                message.channel.send("Failed");
+                return console.log(err);
+            }
+            else message.channel.send(`Added ${user.username}.`);
+        });
     }
 }
