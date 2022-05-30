@@ -28,7 +28,7 @@ module.exports = {
                     let players = results;
 
                     const isFound = players.some(element => {
-                        if (element.ID === user.id) {
+                        if (element.id === user.id) {
                             return true;
                         }
                         
@@ -37,7 +37,7 @@ module.exports = {
 
                     if(isFound === false)
                     {
-                        global.con.query(`INSERT INTO players (ID, TARGET, ALIVE) values (${user.id}, '0', true)`, (err, row) => {
+                        global.con.query(`INSERT INTO players (id, target, alive) values (${user.id}, '0', true)`, (err, row) => {
                             // Return if there is an error
                             if (err) {
                                 message.channel.send("Failed");
@@ -67,7 +67,7 @@ module.exports = {
                 let players = results;
 
                 const isFound = players.some(element => {
-                    if (element.ID === user.id) {
+                    if (element.id === user.id) {
                         return true;
                     }
                     
@@ -76,7 +76,7 @@ module.exports = {
 
                 if(isFound)
                 {
-                    global.con.query(`DELETE FROM players WHERE ID = ${user.id}`, (err, row) => {
+                    global.con.query(`DELETE FROM players WHERE id = ${user.id}`, (err, row) => {
                         // Return if there is an error
                         if (err) {
                             message.channel.send("Failed");
@@ -104,7 +104,7 @@ module.exports = {
                 // We are using fetch because we wanna make sure all users are valid
                 const promises = [];
                 players.forEach(playerData => {
-                    let getPlayer = message.client.users.fetch(playerData.ID);
+                    let getPlayer = message.client.users.fetch(playerData.id);
                     getPlayer.then(function(player) {
                         embed.addField("Player", player.username, true)
                     });

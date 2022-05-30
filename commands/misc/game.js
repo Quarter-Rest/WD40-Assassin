@@ -15,53 +15,47 @@ module.exports = {
 
         const commandType = args[0].toLowerCase();
 
-        let players = db.get('players');
-        let game = db.get('game');
-        if(game === undefined)
-        {
-            game = 
-            {
-                started: false,
-                playersAlive: {}
-            }
-        }
+        global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+            let players = results;
 
-        if(commandType == "start")
-        {
-            StartGame(message, game, players);
-        }
+            global.con.query('SELECT * FROM `game`', function(err, results, fields) {
+                let game = results;
 
-        if(commandType == "end")
-        {
-            EndGame(message, game, players);
-        }
+                if(commandType == "start")
+                {
+                    StartGame(message, game, players);
+                }
 
-        if(commandType == "restart")
-        {
-            EndGame(message, game, players);
-            StartGame(message, game, players);
-        }
+                if(commandType == "end")
+                {
+                    EndGame(message, game, players);
+                }
+
+                if(commandType == "restart")
+                {
+                    EndGame(message, game, players);
+                    StartGame(message, game, players);
+                }
+            });
+        });
         
 	},
 };
 
 function StartGame(message, game, players)
 {
-    if(game.started === true)
+    if(game.running === true)
     {
         message.channel.send("A game already exists!")
     }
     else
     {
         message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
-        game.started = true;
+        game.running = true;
         game.playersAlive = players;
 
         for (const [id, data] of Object.entries(players)) 
         {
-            // Set player alive
-            data.alive = true;
-
             let player = message.client.users.cache.get(id);
             if(player === undefined) continue;
             let targetName = "error send griffon a dm";
@@ -85,22 +79,30 @@ function StartGame(message, game, players)
 
                 message.channel.send(`Could not send DM to ${player.tag}.\n`);
             });
-        }
 
-        db.set('game', JSON.stringify(game));
+            // update player as alive
+            global.con.query(`UPDATE players SET alive = true, target = ${randomPlayerID} WHERE id = ${player.id}`, (err, row) => {
+                // Return if there is an error
+                if (err) {
+                    message.channel.send("Failed");
+                    return console.log(err);
+                }
+                else message.channel.send(`Added ${user.username}.`);
+            });
+        }
     }
 }
 
 function EndGame(message, game)
 {
-    if(game.started === false)
+    if(game.running === false)
     {
         message.channel.send("A game doesn't exist!")
     }
     else
     {
         message.channel.send("Ending game.")
-        game.started = false;
+        game.running = false;
         db.set('game', JSON.stringify(game));
     }
 }
