@@ -36,6 +36,7 @@ module.exports = {
 
                 if(commandType == "start")
                 {
+                    console.log("start")
                     StartGame(message, game, players);
                 }
 
