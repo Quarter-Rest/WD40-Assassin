@@ -19,9 +19,7 @@ module.exports = {
                 message.channel.send("SQL failed.");
                 return;
             }
-
             let players = results;
-            console.log(players)
 
             global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
                 if(err1)
@@ -31,7 +29,6 @@ module.exports = {
                 }
 
                 let game = results1;
-                console.log(results1);
 
                 if(commandType == "start")
                 {
@@ -66,6 +63,7 @@ function StartGame(message, game, players)
 
         players.forEach(playerData => {
             let player = message.client.users.fetch(playerData.id).then(()=>{
+                console.log(player);
                 if(player === undefined) 
                 {
                     message.channel.send("Caught an undefined player.");
