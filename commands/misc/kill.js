@@ -26,36 +26,48 @@ module.exports = {
                 message.reply("That is not a valid user.");
                 return; 
             }
-
-            // https://stackoverflow.com/questions/45856446/how-do-i-wait-for-a-reply-in-discord-js
-            const filter = (m) => m.author.id === message.author.id;
-            message.reply("Are you sure you want to kill that player? This cannot be undone and everyone playing will be notified that you have done this.")
-            .then(() => {
-                message.channel.awaitMessages({filter: filter, max: 1, time: 30000, errors: ['time']})
-                .then(message => {
-                    message = message.first()
-
-                    if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') 
-                    {
-                        message.channel.send(`<@&${global.roleID}>. ${user.username} was killed by ${message.author.username}!`);
-                    } 
-                    else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
-                    {
-                        message.channel.send(`Watch your fire next time.`)
-                    } 
-                    else 
-                    {
-                        message.channel.send(`Guess the bullet missed due to an invalid reply.`)
-                    }
-                })
-                .catch(collected => 
+            
+            global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
+                if(err1)
                 {
-                    message.channel.send('Guess the bullet missed due to an error.');
-                });
-            })
+                    message.channel.send("SQL failed.");
+                    return;
+                }
 
+                let game = results1[0];
+                if(game.running === 0)
+                {
+                    message.reply("There is no game running.")
+                    return;
+                }
 
+                // https://stackoverflow.com/questions/45856446/how-do-i-wait-for-a-reply-in-discord-js
+                const filter = (m) => m.author.id === message.author.id;
+                message.reply("Are you sure you want to kill that player? This cannot be undone and everyone playing will be notified that you have done this.")
+                .then(() => {
+                    message.channel.awaitMessages({filter: filter, max: 1, time: 30000, errors: ['time']})
+                    .then(message => {
+                        message = message.first()
 
+                        if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') 
+                        {
+                            message.channel.send(`<@&${global.roleID}>. ${user.username} was killed by ${message.author.username}!`);
+                        } 
+                        else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
+                        {
+                            message.channel.send(`Watch your fire next time.`)
+                        } 
+                        else 
+                        {
+                            message.channel.send(`Guess the bullet missed due to an invalid reply.`)
+                        }
+                    })
+                    .catch(collected => 
+                    {
+                        message.channel.send('Guess the bullet missed due to an error.');
+                    });
+                })
+            });
 
         });
 	},
