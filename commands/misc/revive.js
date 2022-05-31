@@ -33,7 +33,7 @@ module.exports = {
                 return;
             }
 
-            if(userData.alive == 0)
+            if(userData.alive == 1)
             {
                 message.reply("That player is already alive.");
                 return;
