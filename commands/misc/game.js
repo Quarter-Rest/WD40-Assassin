@@ -1,4 +1,4 @@
-import { CreateMYSQLConnection } from "../bot.js";
+const { CreateMYSQLConnection } = require("../bot.js");
 module.exports = {
 	name: "game",
     description: "Game commands",
