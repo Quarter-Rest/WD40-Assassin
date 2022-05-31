@@ -128,11 +128,8 @@ function EndGame(message, game)
     }
 }
 
-function CreateMYSQLConnection(mysql, TextChannel = undefined)
+function CreateMYSQLConnection(TextChannel = undefined)
 {
-    // Prepare the mysql connection
-    global.con = createConnection(mysql);
-
     // Then we are going to connect to our MySQL database and we will test this on errors
     global.con.connect(err => {
         // Console log if there is an error
