@@ -30,7 +30,7 @@ module.exports = {
                 }
 
                 let game = results1;
-                console.log(game)
+                console.log(game.running)
 
                 if(commandType == "start")
                 {
