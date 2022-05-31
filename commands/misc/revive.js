@@ -17,6 +17,7 @@ module.exports = {
                 message.channel.send("SQL Failed")
                 console.error(err);
             }
+            let players = results;
             
             const user = message.mentions.users.first();
             if (user === undefined) 
