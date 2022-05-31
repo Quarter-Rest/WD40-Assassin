@@ -32,6 +32,13 @@ module.exports = {
                 message.reply("That is not a valid user.");
                 return; 
             }
+
+            let userData = players.find( ({ id }) => id === user.id );
+            if(userData.alive == 0)
+            {
+                message.reply("That player is dead.");
+                return;
+            }
             
             global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
                 if(err1)
