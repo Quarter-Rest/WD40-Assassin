@@ -19,7 +19,7 @@ module.exports = {
             const user = message.mentions.users.first();
             if (user === undefined) 
             {
-                message.channel.send("That is not a valid user.");
+                message.reply("That is not a valid user.");
                 return; // Do not proceed, there is no user.
             }
 
@@ -37,7 +37,7 @@ module.exports = {
 
                     if(isFound === false)
                     {
-                        global.con.query(`INSERT INTO players (id, target, alive, points) values (${user.id}, '0', true, 0)`, (err, row) => {
+                        global.con.query(`INSERT INTO players (id, targetid, alive, points) values (${user.id}, '0', true, 0)`, (err, row) => {
                             // Return if there is an error
                             if (err) {
                                 message.channel.send("Failed");
