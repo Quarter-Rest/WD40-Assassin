@@ -46,7 +46,7 @@ function CreateMYSQLConnection(TextChannel = undefined)
         }
     });
 }
-CreateMYSQLConnection();
+//CreateMYSQLConnection();
 
 
 
