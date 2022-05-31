@@ -108,7 +108,9 @@ module.exports = {
                 players.forEach(playerData => {
                     let getPlayer = message.client.users.fetch(playerData.id);
                     getPlayer.then(function(player) {
-                        embed.addField(`${player.username}`, `*Points:* ${playerData.points}\n*Alive:* ${playerData.alive}`, false)
+                        let alive = false;
+                        if(playerData.alive == 1) alive = true;
+                        embed.addField(`${player.username}`, `**Points:** ${playerData.points}\n**Alive:** ${alive}`, false)
                     });
                     promises.push(getPlayer);
                 });
