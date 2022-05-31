@@ -101,7 +101,7 @@ function StartGame(message, game, players)
                         return console.error(err);
                     }
                 });
-        })
+            })
         })
 
         // Set game running
