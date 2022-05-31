@@ -30,7 +30,9 @@ module.exports = {
                 }
 
                 let game = results1[0];
-                console.log(game.running === 1)
+                // bool conversion
+                if(game.running === 1) game.running = true
+                else game.running = false
 
                 if(commandType == "start")
                 {
