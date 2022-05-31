@@ -7,14 +7,14 @@ module.exports = {
     {
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
             let players = results;
-            console.log(players[message.author.id])
-            if(players[message.author.id] === undefined)
+            let authorData = players.find( ({ id }) => id === message.author.id );
+            if(authorData === undefined)
             {
                 message.reply("You aren't in the game.");
                 return;
             }
 
-            if(players[message.author.id].alive == 0)
+            if(authorData.alive == 0)
             {
                 message.reply("You aren't alive.");
                 return;
