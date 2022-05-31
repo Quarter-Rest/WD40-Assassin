@@ -38,6 +38,7 @@ module.exports = {
                     errors: ['time']
                 })
                 .then(message => {
+                    console.log("Yo yo ")
                     message = message.first()
 
                     if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') {
