@@ -74,22 +74,25 @@ function StartGame(message, game, players)
                 let keys = Object.keys(players);
                 let randomPlayerID = keys[ keys.length * Math.random() << 0];
                 
-                targetName = message.client.users.fetch(randomPlayerID).username;
-                
-                player.send(`Target random: ${targetName}`).then(() => 
-                {
-                    if (message.channel.type === "dm") return;
-                })
-                .catch((error) => 
-                {
-                    // On failing, throw error.
-                    console.error(
-                        `Could not send DM to ${player.tag}.\n`,
-                        error
-                    );
+                let target = message.client.users.fetch(randomPlayerID);
+                target.then(function(target){
+                    targetName = target.username;
+                    
+                    player.send(`Target random: ${targetName}`).then(() => 
+                    {
+                        if (message.channel.type === "dm") return;
+                    })
+                    .catch((error) => 
+                    {
+                        // On failing, throw error.
+                        console.error(
+                            `Could not send DM to ${player.tag}.\n`,
+                            error
+                        );
 
-                    message.channel.send(`Could not send DM to ${player.tag}.\n`);
-                });
+                        message.channel.send(`Could not send DM to ${player.tag}.\n`);
+                    });
+                })
 
                 // update player as alive
                 global.con.query(`UPDATE players SET alive = true, target = ${randomPlayerID} WHERE id = ${player.id}`, (err, row) => {
