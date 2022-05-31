@@ -20,7 +20,7 @@ module.exports = {
 
             global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
                 let game = results1;
-                console.log(game);
+                console.log(results1);
 
                 if(commandType == "start")
                 {
