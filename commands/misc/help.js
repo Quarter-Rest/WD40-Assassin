@@ -24,7 +24,7 @@ module.exports = {
 	 * @param {String[]} args The Message Content of the received message seperated by spaces (' ') in an array, this excludes prefix and command/alias itself.
 	 */
 
-	execute(message, args, mysql) {
+	execute(message, args) {
 		const { commands } = message.client;
 
 		// If there are no args, it means it needs whole help command.

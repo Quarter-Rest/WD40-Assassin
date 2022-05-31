@@ -7,7 +7,7 @@ module.exports = {
 	//permissions: 'SEND_MESSAGES',
 	//guildOnly: true,
 
-	execute(message, args, mysql) {
+	execute(message, args) {
 		message.channel.send({ content: "Pong. a nother test..." });
 	},
 };

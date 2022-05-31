@@ -3,7 +3,7 @@ module.exports = {
 	name: "game",
     description: "Game commands",
 
-	execute(message, args, mysql) 
+	execute(message, args) 
     {
         if (global.adminIDs.includes(message.author.id) == false)
         {
@@ -18,7 +18,7 @@ module.exports = {
             {
                 message.channel.send("SQL connection lost. I will let you know when I am reconnected so you can try again.");
                 console.log(`Channel type: ${typeof(message.channel)}`);
-                CreateMYSQLConnection(mysql, message.channel);
+                CreateMYSQLConnection(message.channel);
                 return;
             }
 

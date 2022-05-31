@@ -4,7 +4,7 @@ module.exports = {
     aliases: "players",
     description: "Player commands",
 
-	execute(message, args, mysql) 
+	execute(message, args) 
     {
         if (global.adminIDs.includes(message.author.id) == false)
         {

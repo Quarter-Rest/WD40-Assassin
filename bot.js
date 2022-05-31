@@ -24,14 +24,12 @@ const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
-// Easy to copy-paste mysql stuff because I don't understand javascript scope
 const { mysql } = require("./config.json");
+global.con = createConnection(mysql);
+// Easy to copy-paste mysql stuff because I don't understand javascript scope
 const { createConnection } = require('mysql2');
 function CreateMYSQLConnection(TextChannel = undefined)
 {
-    // Prepare the mysql connection
-    global.con = createConnection(mysql);
-
     // Then we are going to connect to our MySQL database and we will test this on errors
     global.con.connect(err => {
         // Console log if there is an error
