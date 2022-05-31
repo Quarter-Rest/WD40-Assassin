@@ -65,6 +65,8 @@ function StartGame(message, game, players)
         players.forEach(playerData => {
             let player = message.client.users.fetch(playerData.id);
             player.then(function(player){
+                console.log("Player")
+                console.log(player);
                 if(player === undefined) 
                 {
                     message.channel.send("Caught an undefined player.");
@@ -99,7 +101,7 @@ function StartGame(message, game, players)
                     // Return if there is an error
                     if (err) {
                         message.channel.send("SQL Failed");
-                        return console.log(err);
+                        return console.error(err);
                     }
                 });
             })
@@ -111,7 +113,7 @@ function StartGame(message, game, players)
             // Return if there is an error
             if (err) {
                 message.channel.send("SQL failed");
-                return console.log(err);
+                return console.error(err);
             }
         });
     }
@@ -130,7 +132,7 @@ function EndGame(message, game)
             // Return if there is an error
             if (err) {
                 message.channel.send("SQL failed");
-                return console.log(err);
+                return console.error(err);
             }
         });
     }
