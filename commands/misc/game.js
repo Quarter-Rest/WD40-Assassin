@@ -1,5 +1,4 @@
-const JSONdb = require('simple-json-db');
-const db = new JSONdb('./data.json');
+const { createConnection } = require('mysql2');
 
 module.exports = {
 	name: "game",
