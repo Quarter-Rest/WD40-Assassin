@@ -31,6 +31,7 @@ module.exports = {
             let filter = m => m.author.id === message.author.id
             message.reply("Are you sure you want to kill that player? This cannot be undone and everyone playing will be notified that you have done this.")
             .then(() => {
+                console.log("Waiting")
                 message.channel.awaitMessages(filter, {
                     max: 1,
                     time: 30000,
