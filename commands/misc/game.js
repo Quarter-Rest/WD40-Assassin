@@ -17,6 +17,7 @@ module.exports = {
 
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
             let players = results;
+            console.log(players)
 
             global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
                 let game = results1;
