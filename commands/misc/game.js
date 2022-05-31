@@ -74,6 +74,7 @@ function StartGame(message, game, players)
             let randomPlayerID = keys[ keys.length * Math.random() << 0];
             
             let target = message.client.users.cache.get(randomPlayerID);
+            console.log(target);
             targetName = target.username;
             
             player.send(`Target random: ${targetName}`).then(() => 
