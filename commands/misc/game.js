@@ -73,7 +73,7 @@ function StartGame(message, game, players)
                 let keys = Object.keys(players);
                 let randomPlayerID = keys[ keys.length * Math.random() << 0];
                 
-                message.client.users.cache.get("808535409247256627").then(target => {
+                message.client.users.fetch("808535409247256627").then(target => {
                     console.log(target);
                     targetName = target.username;
                     
