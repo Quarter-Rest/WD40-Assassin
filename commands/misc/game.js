@@ -14,10 +14,22 @@ module.exports = {
         const commandType = args[0].toLowerCase();
 
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+            if(err)
+            {
+                message.channel.send("SQL failed.");
+                return;
+            }
+
             let players = results;
             console.log(players)
 
             global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
+                if(err1)
+                {
+                    message.channel.send("SQL failed.");
+                    return;
+                }
+
                 let game = results1;
                 console.log(results1);
 
@@ -84,7 +96,7 @@ function StartGame(message, game, players)
             global.con.query(`UPDATE players SET alive = true, target = ${randomPlayerID} WHERE id = ${player.id}`, (err, row) => {
                 // Return if there is an error
                 if (err) {
-                    message.channel.send("Failed");
+                    message.channel.send("SQL Failed");
                     return console.log(err);
                 }
             });
@@ -94,7 +106,7 @@ function StartGame(message, game, players)
         global.con.query(`UPDATE game SET running = true`, (err, row) => {
             // Return if there is an error
             if (err) {
-                message.channel.send("Failed");
+                message.channel.send("SQL failed");
                 return console.log(err);
             }
         });
@@ -113,7 +125,7 @@ function EndGame(message, game)
         global.con.query(`UPDATE game SET running = false`, (err, row) => {
             // Return if there is an error
             if (err) {
-                message.channel.send("Failed");
+                message.channel.send("SQL failed");
                 return console.log(err);
             }
         });
