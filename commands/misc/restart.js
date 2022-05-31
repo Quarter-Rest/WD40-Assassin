@@ -7,7 +7,7 @@ module.exports = {
 	//permissions: 'ADMINISTRATOR',
 	//guildOnly: true,
     
-	execute(message, args) {
+	execute(message, args, mysql) {
         if (global.adminIDs.includes(message.author.id))
         {
 		    message.channel.send({ content: "Restarting..." }).then(() => {

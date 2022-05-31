@@ -22,7 +22,7 @@ module.exports = {
 	 * @param {String[]} args The Message Content of the received message seperated by spaces (' ') in an array, this excludes prefix and command/alias itself.
 	 */
 
-	execute(message, args) {
+	execute(message, args, mysql) {
 		/**
 		 * @type {String}
 		 * @description Name of the specifiied command in lowercase.

@@ -1,10 +1,9 @@
-const { mysql } = require("../config.json");
 const { createConnection } = require('mysql2');
 module.exports = {
 	name: "game",
     description: "Game commands",
 
-	execute(message, args) 
+	execute(message, args, mysql) 
     {
         if (global.adminIDs.includes(message.author.id) == false)
         {
@@ -19,7 +18,7 @@ module.exports = {
             {
                 message.channel.send("SQL connection lost. I will let you know when I am reconnected so you can try again.");
                 console.log(`Channel type: ${typeof(message.channel)}`);
-                CreateMYSQLConnection(message.channel);
+                CreateMYSQLConnection(mysql, message.channel);
                 return;
             }
 
@@ -129,7 +128,7 @@ function EndGame(message, game)
     }
 }
 
-function CreateMYSQLConnection(TextChannel = undefined)
+function CreateMYSQLConnection(mysql, TextChannel = undefined)
 {
     // Prepare the mysql connection
     global.con = createConnection(mysql);

@@ -7,7 +7,7 @@
 // Declares constants (destructured) to be used in this file.
 
 const { Collection } = require("discord.js");
-const { prefix, owner } = require("../config.json");
+const { prefix, owner, mysql } = require("../config.json");
 
 // Prefix regex, we will use to match in mention prefix.
 
@@ -166,7 +166,7 @@ module.exports = {
 
 		// execute the final command. Put everything above this.
 		try {
-			command.execute(message, args);
+			command.execute(message, args, mysql);
 		} catch (error) {
 			console.error(error);
 			message.reply({
