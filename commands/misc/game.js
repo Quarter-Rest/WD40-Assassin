@@ -36,25 +36,12 @@ module.exports = {
 
                 if(commandType == "start")
                 {
-                    console.log("start")
                     StartGame(message, game, players);
                 }
 
                 if(commandType == "end")
                 {
                     EndGame(message, game, players);
-                }
-
-                if(commandType == "restart")
-                {
-                    global.con.query(`UPDATE game SET running = false`, (err, row) => {
-                        // Return if there is an error
-                        if (err) {
-                            message.channel.send("SQL failed");
-                            return console.error(err);
-                        }
-                        StartGame(message, game, players);
-                    });
                 }
             });
         });
