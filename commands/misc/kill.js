@@ -34,6 +34,12 @@ module.exports = {
             }
 
             let userData = players.find( ({ id }) => id === user.id );
+            if(userData === undefined)
+            {
+                message.reply("That player isn't in the game.")
+                return;
+            }
+
             if(userData.alive == 0)
             {
                 message.reply("That player is dead.");
