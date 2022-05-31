@@ -55,7 +55,7 @@ module.exports = {
 
 function StartGame(message, game, players)
 {
-    if(game.running == true)
+    if(game.running == 0)
     {
         message.channel.send("A game already exists!")
     }
@@ -117,7 +117,7 @@ function StartGame(message, game, players)
 
 function EndGame(message, game)
 {
-    if(game.running == false)
+    if(game.running == 1)
     {
         message.channel.send("A game doesn't exist!")
     }
