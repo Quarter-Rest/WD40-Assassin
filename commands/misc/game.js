@@ -93,7 +93,7 @@ function StartGame(message, game, players)
 
 
                 // update player as alive
-                global.con.query(`UPDATE players SET alive = true, target = ${randomPlayer} WHERE id = ${player.id}`, (err, row) => {
+                global.con.query(`UPDATE players SET alive = true, target = ${randomPlayer.id} WHERE id = ${player.id}`, (err, row) => {
                     // Return if there is an error
                     if (err) {
                         message.channel.send("SQL Failed");
