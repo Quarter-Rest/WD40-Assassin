@@ -16,7 +16,25 @@ module.exports = {
         const commandType = args[0].toLowerCase();
 
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
-            if(err) console.log(err);
+            if(err)
+            {
+                message.channel.send("SQL connection lost. I will let you know when I am reconnected so you can try again.");
+
+                // Prepare the mysql connection
+                global.con = createConnection(mysql);
+
+                // Then we are going to connect to our MySQL database and we will test this on errors
+                global.con.connect(err => {
+                    // Console log if there is an error
+                    if (err) return console.log(err);
+
+                    // No error found?
+                    console.log(`MySQL has been connected!`);
+                    message.channel.send("SQL connection reestablished.");
+                });
+
+                return;
+            }
 
             let players = results;
             console.log(players)
