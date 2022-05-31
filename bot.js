@@ -25,7 +25,7 @@ const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
-function CreateMYSQLConnection(TextChannel = undefined)
+export function CreateMYSQLConnection(TextChannel = undefined)
 {
     // Prepare the mysql connection
     global.con = createConnection(mysql);
@@ -43,8 +43,7 @@ function CreateMYSQLConnection(TextChannel = undefined)
         }
     });
 }
-
-CreateMYSQLConnection();
+//CreateMYSQLConnection();
 
 
 

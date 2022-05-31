@@ -1,3 +1,4 @@
+import { CreateMYSQLConnection } from "../bot.js";
 module.exports = {
 	name: "game",
     description: "Game commands",
