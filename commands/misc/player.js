@@ -48,7 +48,7 @@ module.exports = {
 
                             message.channel.send(`Added ${user.username}.`);
                             var role = message.guild.roles.cache.get(global.roleID);
-                            console.log(user.roles);
+                            console.log(user);
                             //user.roles.add(role).catch(console.error);
                         });
                     }
