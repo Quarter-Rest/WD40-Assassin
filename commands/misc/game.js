@@ -16,6 +16,8 @@ module.exports = {
         const commandType = args[0].toLowerCase();
 
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+            if(err) console.log(err);
+
             let players = results;
             console.log(players)
 
