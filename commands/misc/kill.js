@@ -31,13 +31,12 @@ module.exports = {
             const filter = (m) => m.author.id === message.author.id;
             message.reply("Are you sure you want to kill that player? This cannot be undone and everyone playing will be notified that you have done this.")
             .then(() => {
-                console.log("Waiting")
                 message.channel.awaitMessages({filter: filter, max: 1, time: 30000, errors: ['time']})
                 .then(message => {
                     message = message.first()
 
                     if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') {
-                        message.channel.send(`<@&${global.roleID}>.`)
+                        message.channel.send(`<@&${global.roleID}>. ${user.username}`)
                     } else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') {
                         message.channel.send(`Watch your fire next time.`)
                     } else {
