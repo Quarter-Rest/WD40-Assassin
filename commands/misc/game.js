@@ -1,4 +1,5 @@
-const { CreateMYSQLConnection } = require(".../bot.js");
+const { mysql } = require("./config.json");
+const { createConnection } = require('mysql2');
 module.exports = {
 	name: "game",
     description: "Game commands",
@@ -126,4 +127,23 @@ function EndGame(message, game)
             }
         });
     }
+}
+
+function CreateMYSQLConnection(TextChannel = undefined)
+{
+    // Prepare the mysql connection
+    global.con = createConnection(mysql);
+
+    // Then we are going to connect to our MySQL database and we will test this on errors
+    global.con.connect(err => {
+        // Console log if there is an error
+        if (err) return console.log(err);
+
+        // No error found?
+        console.log(`MySQL has been connected!`);
+        if(TextChannel != undefined)
+        {
+            TextChannel.send("Established connection to database. Feel free to use commands again.");
+        }
+    });
 }
