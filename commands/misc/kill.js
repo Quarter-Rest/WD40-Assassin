@@ -41,11 +41,11 @@ module.exports = {
                     } else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') {
                         message.channel.send(`Watch your fire next time.`)
                     } else {
-                        message.channel.send(`Guess the bullet missed.`)
+                        message.channel.send(`Guess the bullet missed due to an invalid reply.`)
                     }
                 })
                 .catch(collected => {
-                    message.channel.send('Guess the bullet missed.');
+                    message.channel.send('Guess the bullet missed due to an error.');
                 });
             })
 
