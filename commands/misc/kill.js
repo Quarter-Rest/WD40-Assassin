@@ -28,17 +28,12 @@ module.exports = {
             }
 
             // https://stackoverflow.com/questions/45856446/how-do-i-wait-for-a-reply-in-discord-js
-            let filter = m => m.author.id === message.author.id
+            const filter = (m) => m.author.id === message.author.id;
             message.reply("Are you sure you want to kill that player? This cannot be undone and everyone playing will be notified that you have done this.")
             .then(() => {
                 console.log("Waiting")
-                message.channel.awaitMessages(filter, {
-                    max: 1,
-                    time: 30000,
-                    errors: ['time']
-                })
+                message.channel.awaitMessages({filter: filter, max: 1, time: 30000, errors: ['time']})
                 .then(message => {
-                    console.log("Yo yo ")
                     message = message.first()
 
                     if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') {
