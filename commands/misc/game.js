@@ -73,8 +73,12 @@ function StartGame(message, game, players)
                 }
                 let targetName = "error send griffon a dm";
 
-                let keys = Object.values(players);
+                // Do a bit of randomization on all other players
+                let otherPlayers = players;
+                delete otherPlayers[playerData.id];
+                let keys = Object.values(otherPlayers);
                 let randomPlayer = keys[ keys.length * Math.random() << 0];
+                
                 message.client.users.fetch(randomPlayer.id).then(target => {
                     targetName = target.username;
                     
