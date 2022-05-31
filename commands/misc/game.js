@@ -61,9 +61,8 @@ function StartGame(message, game, players)
     else
     {
         message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
-        let actualPlayers = [];
         players.forEach(playerData => {
-            let player = message.client.users.get("id", playerData.id);
+            let player = message.client.users.cache.get(playerData.id);
             console.log(player);
             if(player === undefined) 
             {
@@ -74,7 +73,7 @@ function StartGame(message, game, players)
             let keys = Object.keys(players);
             let randomPlayerID = keys[ keys.length * Math.random() << 0];
             
-            let target = message.client.users.get("id", randomPlayerID);
+            let target = message.client.users.cache.get(randomPlayerID);
             targetName = target.username;
             
             player.send(`Target random: ${targetName}`).then(() => 
