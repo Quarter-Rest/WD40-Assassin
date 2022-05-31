@@ -45,7 +45,10 @@ module.exports = {
                                 message.channel.send("Failed");
                                 return console.log(err);
                             }
-                            else message.channel.send(`Added ${user.username}.`);
+
+                            message.channel.send(`Added ${user.username}.`);
+                            var role = user.guild.roles.cache.find(role => role.id === global.roleID);
+                            user.roles.add(role)
                         });
                     }
                     else
