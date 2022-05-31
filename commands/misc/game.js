@@ -1,4 +1,4 @@
-const { mysql } = require(".../config.json");
+const { mysql } = require("../config.json");
 const { createConnection } = require('mysql2');
 module.exports = {
 	name: "game",
