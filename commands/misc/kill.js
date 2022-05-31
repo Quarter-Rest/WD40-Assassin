@@ -6,6 +6,12 @@ module.exports = {
 	execute(message, args) 
     {
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+            if(err)
+            {
+                message.channel.send("SQL Failed")
+                console.error(err);
+            }
+
             let players = results;
             let authorData = players.find( ({ id }) => id === message.author.id );
             if(authorData === undefined)
@@ -31,6 +37,7 @@ module.exports = {
                 if(err1)
                 {
                     message.channel.send("SQL failed.");
+                    console.error(err1);
                     return;
                 }
 
@@ -44,14 +51,16 @@ module.exports = {
                 // https://stackoverflow.com/questions/45856446/how-do-i-wait-for-a-reply-in-discord-js
                 const filter = (m) => m.author.id === message.author.id;
                 message.reply("Are you sure you want to kill that player? This cannot be undone and everyone playing will be notified that you have done this.")
-                .then(() => {
+                .then(() => 
+                {
                     message.channel.awaitMessages({filter: filter, max: 1, time: 30000, errors: ['time']})
-                    .then(message => {
+                    .then(message => 
+                    {
                         message = message.first()
 
                         if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') 
                         {
-                            message.channel.send(`<@&${global.roleID}>. ${user.username} was killed by ${message.author.username}!`);
+                            KillPlayer(message, user, authorData);
                         } 
                         else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
                         {
@@ -72,3 +81,29 @@ module.exports = {
         });
 	},
 };
+
+function KillPlayer(message, killedPlayer, authorData)
+{
+    message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by ${message.author.username}!`);
+
+    if(authorData.targetid = killedPlayer.id)
+    {
+        // Kill player
+        global.con.query(`UPDATE players SET alive = false WHERE id = ${killedPlayer.id}`, (err, row) => {
+            if (err) {
+                message.channel.send("SQL Failed");
+                return console.error(err);
+            }
+        });
+
+        let points = authorData.points + 1;
+
+        // Give point to assassin
+        global.con.query(`UPDATE players SET points = ${points}, targetid = '0', WHERE id = ${message.author.id}`, (err, row) => {
+            if (err) {
+                message.channel.send("SQL Failed");
+                return console.error(err);
+            }
+        });
+    }
+}

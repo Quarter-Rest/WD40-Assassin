@@ -27,8 +27,10 @@ module.exports = {
                 function(err, results, fields) {
                     let players = results;
 
-                    const isFound = players.some(element => {
-                        if (element.id === user.id) {
+                    const isFound = players.some(element => 
+                    {
+                        if (element.id === user.id) 
+                        {
                             return true;
                         }
                         
