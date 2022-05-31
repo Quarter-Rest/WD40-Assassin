@@ -63,47 +63,46 @@ function StartGame(message, game, players)
         message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
 
         players.forEach(playerData => {
-            let player = message.client.users.fetch("808535409247256627").then(user => {
-                console.log(user);
-            })
-            return;
-            if(player === undefined) 
-            {
-                message.channel.send("Caught an undefined player.");
-            }
-            let targetName = "error send griffon a dm";
-
-            let keys = Object.keys(players);
-            let randomPlayerID = keys[ keys.length * Math.random() << 0];
-            
-            let target = message.client.users.cache.get("808535409247256627");
-            console.log(target);
-            targetName = target.username;
-            
-            player.send(`Target random: ${targetName}`).then(() => 
-            {
-                if (message.channel.type === "dm") return;
-            })
-            .catch((error) => 
-            {
-                // On failing, throw error.
-                console.error(
-                    `Could not send DM to ${player.tag}.\n`,
-                    error
-                );
-
-                message.channel.send(`Could not send DM to ${player.tag}.\n`);
-            });
-
-
-            // update player as alive
-            global.con.query(`UPDATE players SET alive = true, target = ${randomPlayerID} WHERE id = ${player.id}`, (err, row) => {
-                // Return if there is an error
-                if (err) {
-                    message.channel.send("SQL Failed");
-                    return console.error(err);
+            message.client.users.fetch("808535409247256627").then(player => {
+                if(player === undefined) 
+                {
+                    message.channel.send("Caught an undefined player.");
                 }
-            });
+                let targetName = "error send griffon a dm";
+
+                let keys = Object.keys(players);
+                let randomPlayerID = keys[ keys.length * Math.random() << 0];
+                
+                message.client.users.cache.get("808535409247256627").then(target => {
+                    console.log(target);
+                    targetName = target.username;
+                    
+                    player.send(`Target random: ${targetName}`).then(() => 
+                    {
+                        if (message.channel.type === "dm") return;
+                    })
+                    .catch((error) => 
+                    {
+                        // On failing, throw error.
+                        console.error(
+                            `Could not send DM to ${player.tag}.\n`,
+                            error
+                        );
+
+                        message.channel.send(`Could not send DM to ${player.tag}.\n`);
+                    });
+                })
+
+
+                // update player as alive
+                global.con.query(`UPDATE players SET alive = true, target = ${randomPlayerID} WHERE id = ${player.id}`, (err, row) => {
+                    // Return if there is an error
+                    if (err) {
+                        message.channel.send("SQL Failed");
+                        return console.error(err);
+                    }
+                });
+        })
         })
 
         // Set game running
