@@ -30,7 +30,10 @@ const client = new Client({
 //
 const { mysql } = require("./config.json");
 const { createConnection } = require('mysql2');
-global.con = createConnection(mysql);
+// yes I know this is wrong
+global.mysql = mysql;
+global.createConnection = createConnection;
+global.con = global.createConnection(global.mysql);
 
 // Then we are going to connect to our MySQL database and we will test this on errors
 global.con.connect(err => {
