@@ -19,6 +19,7 @@ module.exports = {
                 message.channel.send("SQL failed.");
                 return;
             }
+
             let players = results;
 
             global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
@@ -60,10 +61,10 @@ function StartGame(message, game, players)
     else
     {
         message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
-
+        let actualPlayers = [];
         players.forEach(playerData => {
-            let player = message.client.users.fetch(playerData.id).then(()=>{
-                console.log(player);
+            let player = message.client.users.fetch(playerData.id);
+            player.then(function(player){
                 if(player === undefined) 
                 {
                     message.channel.send("Caught an undefined player.");
@@ -99,7 +100,8 @@ function StartGame(message, game, players)
                     }
                 });
             })
-        });
+        })
+
 
         // Set game running
         global.con.query(`UPDATE game SET running = true`, (err, row) => {
