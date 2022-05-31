@@ -54,7 +54,7 @@ function StartGame(message, game, players)
         message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
 
         players.forEach(playerData => {
-            let player = message.client.users.fetch(playerData.id);
+            let player = message.client.users.fetch(playerData.id).then(()=>{})
 
             if(player === undefined) {
                 message.channel.send("Caught an undefined player.");
@@ -65,8 +65,7 @@ function StartGame(message, game, players)
             let randomPlayerID = keys[ keys.length * Math.random() << 0];
             
             targetName = message.client.users.fetch(randomPlayerID).username;
-            console.log(typeof(player));
-            console.log(player);
+            
             player.send(`Target random: ${targetName}`).then(() => 
             {
                 if (message.channel.type === "dm") return;
