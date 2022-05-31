@@ -123,7 +123,7 @@ function EndGame(message, game)
     }
     else
     {
-        message.channel.send("Ending game.")
+        message.channel.send(`<@&${global.roleID}>. Ending game.`)
         global.con.query(`UPDATE game SET running = false`, (err, row) => {
             // Return if there is an error
             if (err) {
