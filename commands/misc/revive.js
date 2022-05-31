@@ -45,7 +45,7 @@ module.exports = {
                     return console.error(err);
                 }
 
-                message.channel.send(`<@${user.id} revived!`);
+                message.channel.send(`<@${user.id}> revived!`);
             });
             
         });
