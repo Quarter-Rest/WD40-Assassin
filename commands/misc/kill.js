@@ -37,7 +37,7 @@ module.exports = {
                     message = message.first()
 
                     if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') {
-                        message.channel.send(`<@&${global.roleID}>. ${user.username} has been killed by ${author.username}`)
+                        message.channel.send(`<@&${global.roleID}>.`)
                     } else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') {
                         message.channel.send(`Watch your fire next time.`)
                     } else {
