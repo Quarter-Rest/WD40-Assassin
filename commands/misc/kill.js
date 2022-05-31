@@ -7,7 +7,7 @@ module.exports = {
     {
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
             let players = results;
-            console.log(players)
+            console.log(players[message.author.id])
             if(players[message.author.id] === undefined)
             {
                 message.reply("You aren't in the game.");
