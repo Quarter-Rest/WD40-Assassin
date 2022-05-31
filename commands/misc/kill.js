@@ -35,15 +35,21 @@ module.exports = {
                 .then(message => {
                     message = message.first()
 
-                    if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') {
+                    if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') 
+                    {
                         message.channel.send(`<@&${global.roleID}>. ${user.username} was killed by ${message.author.username}!`);
-                    } else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') {
+                    } 
+                    else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
+                    {
                         message.channel.send(`Watch your fire next time.`)
-                    } else {
+                    } 
+                    else 
+                    {
                         message.channel.send(`Guess the bullet missed due to an invalid reply.`)
                     }
                 })
-                .catch(collected => {
+                .catch(collected => 
+                {
                     message.channel.send('Guess the bullet missed due to an error.');
                 });
             })
