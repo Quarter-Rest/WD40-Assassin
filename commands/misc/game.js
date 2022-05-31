@@ -46,8 +46,14 @@ module.exports = {
 
                 if(commandType == "restart")
                 {
-                    EndGame(message, game, players);
-                    StartGame(message, game, players);
+                    global.con.query(`UPDATE game SET running = false`, (err, row) => {
+                        // Return if there is an error
+                        if (err) {
+                            message.channel.send("SQL failed");
+                            return console.error(err);
+                        }
+                        StartGame(message, game, players);
+                    });
                 }
             });
         });
@@ -78,7 +84,7 @@ function StartGame(message, game, players)
                 delete otherPlayers[playerData.id];
                 let keys = Object.values(otherPlayers);
                 let randomPlayer = keys[ keys.length * Math.random() << 0];
-                
+
                 message.client.users.fetch(randomPlayer.id).then(target => {
                     targetName = target.username;
                     
