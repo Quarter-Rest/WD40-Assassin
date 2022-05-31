@@ -25,7 +25,7 @@ const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
-export function CreateMYSQLConnection(TextChannel = undefined)
+module.exports = function CreateMYSQLConnection(TextChannel = undefined)
 {
     // Prepare the mysql connection
     global.con = createConnection(mysql);
