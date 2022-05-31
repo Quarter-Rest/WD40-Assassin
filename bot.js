@@ -25,17 +25,28 @@ const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
-// Prepare the mysql connection
-global.con = createConnection(mysql);
+function CreateMYSQLConnection(TextChannel = undefined)
+{
+    // Prepare the mysql connection
+    global.con = createConnection(mysql);
 
-// Then we are going to connect to our MySQL database and we will test this on errors
-global.con.connect(err => {
-    // Console log if there is an error
-    if (err) return console.log(err);
+    // Then we are going to connect to our MySQL database and we will test this on errors
+    global.con.connect(err => {
+        // Console log if there is an error
+        if (err) return console.log(err);
 
-    // No error found?
-    console.log(`MySQL has been connected!`);
-});
+        // No error found?
+        console.log(`MySQL has been connected!`);
+        if(TextChannel != undefined)
+        {
+            TextChannel.send("Established connection to database. Feel free to use commands again.");
+        }
+    });
+}
+
+CreateMYSQLConnection();
+
+
 
 /**********************************************************************/
 // Below we will be making an event handler!

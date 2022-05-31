@@ -1,5 +1,3 @@
-const { createConnection } = require('mysql2');
-
 module.exports = {
 	name: "game",
     description: "Game commands",
@@ -18,20 +16,8 @@ module.exports = {
             if(err)
             {
                 message.channel.send("SQL connection lost. I will let you know when I am reconnected so you can try again.");
-
-                // Prepare the mysql connection
-                global.con = createConnection(mysql);
-
-                // Then we are going to connect to our MySQL database and we will test this on errors
-                global.con.connect(err => {
-                    // Console log if there is an error
-                    if (err) return console.log(err);
-
-                    // No error found?
-                    console.log(`MySQL has been connected!`);
-                    message.channel.send("SQL connection reestablished.");
-                });
-
+                console.log(`Channel type: ${typeof(message.channel)}`);
+                CreateMYSQLConnection(message.channel);
                 return;
             }
 
