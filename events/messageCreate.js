@@ -7,7 +7,8 @@
 // Declares constants (destructured) to be used in this file.
 
 const { Collection } = require("discord.js");
-const { prefix, owner } = require("../config.json");
+const { prefix, owner, mysql } = require("../config.json");
+const { createConnection } = require('mysql2');
 
 // Prefix regex, we will use to match in mention prefix.
 
@@ -164,14 +165,50 @@ module.exports = {
 
 		// Rest your creativity is below.
 
-		// execute the final command. Put everything above this.
-		try {
-			command.execute(message, args);
-		} catch (error) {
-			console.error(error);
-			message.reply({
-				content: "There was an error trying to execute that command!",
-			});
-		}
+        // MYSQL test so I'm not writing it in every command
+        global.con.ping(function (err) 
+        {
+            if (err) 
+            {
+                console.log("Lost connection to MYSQL, reestablishing before we run the command.")
+                global.con = createConnection(mysql);
+
+                // Then we are going to connect to our MySQL database and we will test this on errors
+                global.con.connect(err => {
+                    // Console log if there is an error
+                    if (err) return console.log(err);
+
+                    // No error found?
+                    console.log(`MySQL has been connected!`);
+
+                    // execute the final command. Put everything above this.
+                    try {
+                        command.execute(message, args);
+                    } 
+                    catch (error) 
+                    {
+                        console.error(error);
+                        message.reply({
+                            content: "There was an error trying to execute that command!",
+                        });
+                    }
+                });
+            }
+            else
+            {
+                // execute the final command. Put everything above this.
+                try 
+                {
+                    command.execute(message, args);
+                } 
+                catch (error) 
+                {
+                    console.error(error);
+                    message.reply({
+                        content: "There was an error trying to execute that command!",
+                    });
+                }
+            }
+        })
 	},
 };

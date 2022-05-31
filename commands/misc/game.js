@@ -14,14 +14,6 @@ module.exports = {
         const commandType = args[0].toLowerCase();
 
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
-            if(err)
-            {
-                message.channel.send("SQL connection lost. I will let you know when I am reconnected so you can try again.");
-                console.log(`Channel type: ${typeof(message.channel)}`);
-                CreateMYSQLConnection(message.channel);
-                return;
-            }
-
             let players = results;
             console.log(players)
 
@@ -126,29 +118,4 @@ function EndGame(message, game)
             }
         });
     }
-}
-
-function CreateMYSQLConnection(TextChannel = undefined)
-{
-    global.con = global.createConnection(global.mysql);
-    
-    // Then we are going to connect to our MySQL database and we will test this on errors
-    global.con.connect(err => {
-        // Console log if there is an error
-        if (err) 
-        {
-            if(TextChannel != undefined)
-            {
-                TextChannel.send("Failed to connect to MYSQL.");
-            }
-            return console.log(err);
-        }
-
-        // No error found?
-        console.log(`MySQL has been connected!`);
-        if(TextChannel != undefined)
-        {
-            TextChannel.send("Established connection to database. Feel free to use commands again.");
-        }
-    });
 }
