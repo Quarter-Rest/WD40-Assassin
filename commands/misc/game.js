@@ -63,7 +63,7 @@ function StartGame(message, game, players)
         message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
         players.forEach(playerData => {
             let player = message.client.users.fetch("808535409247256627").then(user => {
-                console.log(player);
+                console.log(user);
             })
             if(player === undefined) 
             {
