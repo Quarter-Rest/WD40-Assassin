@@ -99,7 +99,7 @@ function KillPlayer(message, killedPlayer, authorData)
         let points = authorData.points + 1;
 
         // Give point to assassin
-        global.con.query(`UPDATE players SET points = ${points}, targetid = '0', WHERE id = ${message.author.id}`, (err, row) => {
+        global.con.query(`UPDATE players SET points = ${points}, targetid = '0' WHERE id = ${message.author.id}`, (err, row) => {
             if (err) {
                 message.channel.send("SQL Failed");
                 return console.error(err);
