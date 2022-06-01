@@ -70,6 +70,7 @@ function StartGame(message, game, players)
                 // Do a bit of randomization on all other players
                 let otherPlayers = players;
                 delete otherPlayers[playerData.id];
+                console.log(otherPlayers)
                 let keys = Object.values(otherPlayers);
                 let randomPlayer = keys[ keys.length * Math.random() << 0];
 
