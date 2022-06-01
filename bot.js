@@ -101,6 +101,7 @@ for (const folder of commandFolders) {
 	for (const file of commandFiles) {
 		const command = require(`./commands/${folder}/${file}`);
 		client.commands.set(command.name, command);
+        if(command.timerHandler()) command.timerHandler();
 	}
 }
 

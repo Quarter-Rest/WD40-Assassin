@@ -62,8 +62,11 @@ module.exports = {
                 }
             });
         });
-        
 	},
+    timerHandler()
+    {
+        console.log("This worked");
+    },
 };
 
 function StartGame(message, game, players)
