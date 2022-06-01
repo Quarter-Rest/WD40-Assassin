@@ -47,9 +47,8 @@ module.exports = {
                 if(commandType == "respawntime")
                 {
                     if(args[1] === undefined) return;
-                    let respawnTime = parseInt(args[1]);
+                    let respawnTime = parseFloat(args[1]);
                     respawnTime = respawnTime * 10000
-                    console.log(respawnTime);
                     
                     global.con.query(`UPDATE game SET respawnTime = ${respawnTime}`, (err, row) => {
                         // Return if there is an error
