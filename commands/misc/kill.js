@@ -95,7 +95,34 @@ module.exports = {
 
         });
 	},
+    timerHandler()
+    {
+        console.log("Running kill timers.");
+
+        global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+            if(err)
+            {
+                message.channel.send("SQL Failed")
+                console.error(err);
+            }
+
+            let players = results;
+
+            players.forEach(playerData => {
+                ReviveTimer(playerData);
+            });
+        });
+    },
 };
+
+function ReviveTimer(playerData)
+{
+    let curTime = Date.now();
+    let timeToEnd = playerData.timeToRevive;
+    setTimeout(() => {
+        console.log(`Revived player.`)
+    }, timeToEnd - curTime);
+}
 
 function KillPlayer(message, killedPlayer, authorData, killedData, game)
 {
