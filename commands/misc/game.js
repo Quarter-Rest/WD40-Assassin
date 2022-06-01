@@ -12,6 +12,7 @@ module.exports = {
         }
 
         const commandType = args[0].toLowerCase();
+        console.log(commandType);
 
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
             if(err)
@@ -46,7 +47,6 @@ module.exports = {
 
                 if(commandType == "respawnTime")
                 {
-                    console.log("Here")
                     if(args[1] === undefined) return;
                     let respawnTime = parseInt(args[1]);
                     respawnTime = respawnTime * 10000
