@@ -11,6 +11,6 @@ module.exports = {
 		message.channel.send({ content: "Timer Start." });
         setTimeout(() => {
             message.channel.send({ content: "Timer End after 1 second." });
-        }, "1000")
+        }, 1000)
 	},
 };
