@@ -97,10 +97,9 @@ module.exports = {
 
 function KillPlayer(message, killedPlayer, authorData)
 {
-    console.log(authorData)
-    console.log(killedPlayer)
+    let killedData = players.find( ({ id }) => id === killedPlayer.id );
     // Killed target
-    if(authorData.targetid == killedPlayer.id)
+    if(authorData.targetid == killedData.id)
     {
         // Kill player
         global.con.query(`UPDATE players SET alive = false WHERE id = ${killedPlayer.id}`, (err, row) => {
@@ -123,7 +122,7 @@ function KillPlayer(message, killedPlayer, authorData)
         message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by their assassin: ${message.author.username}!`);
     }
     // Killed assassin
-    else if(killedPlayer.targetid == authorData.id)
+    else if(killedData.targetid == authorData.id)
     {
         // Kill assassin and remove target
         global.con.query(`UPDATE players SET alive = false, targetid = '0' WHERE id = ${killedPlayer.id}`, (err, row) => {
