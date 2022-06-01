@@ -45,6 +45,12 @@ module.exports = {
                 message.reply("That player is dead.");
                 return;
             }
+
+            if(userData.id === authorData.id)
+            {
+                message.reply("Sorry, you cannot kill yourself.")
+                return;
+            }
             
             global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
                 if(err1)
