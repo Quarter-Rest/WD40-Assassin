@@ -39,9 +39,6 @@ global.con.connect(err => {
 
     // No error found?
     console.log(`MySQL has been connected!`);
-
-    // debug
-    global.con.end();
 });
 
 

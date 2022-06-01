@@ -65,7 +65,7 @@ module.exports = {
 	},
     timerHandler()
     {
-        console.log("This worked");
+        console.log("Running game timers.");
     },
 };
 
