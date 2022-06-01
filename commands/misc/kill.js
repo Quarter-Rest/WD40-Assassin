@@ -74,7 +74,7 @@ module.exports = {
                         if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') 
                         {
                             let killedData = players.find( ({ id }) => id === user.id );
-                            KillPlayer(message, user, authorData, killedData, game);
+                            KillPlayer(client, message, user, authorData, killedData, game);
                         } 
                         else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
                         {
@@ -95,7 +95,7 @@ module.exports = {
 
         });
 	},
-    timerHandler()
+    timerHandler(client)
     {
         console.log("Running kill timers.");
 
@@ -109,22 +109,44 @@ module.exports = {
             let players = results;
 
             players.forEach(playerData => {
-                ReviveTimer(playerData);
+                ReviveTimer(client, playerData);
             });
         });
     },
 };
 
-function ReviveTimer(playerData)
+function ReviveTimer(client, playerData)
 {
     let curTime = Date.now();
     let timeToEnd = playerData.timeToRevive;
     setTimeout(() => {
-        console.log(`Revived player.`)
+        global.con.query(`UPDATE players SET alive = true, timeToRevive = 0 WHERE id = ${playerData.id}`, (err, row) => {
+            if (err) {
+                return console.error(err);
+            }
+
+            // DM player
+            client.users.fetch(playerData.id).then(player => {
+                player.send(`You are now revived.`).then(() => 
+                {
+                    if (message.channel.type === "dm") return;
+                })
+                .catch((error) => 
+                {
+                    // On failing, throw error.
+                    console.error(
+                        `Could not send DM to ${player.tag}.\n`,
+                        error
+                    );
+
+                    message.channel.send(`Could not send DM to ${player.tag}.\n`);
+                });
+            });
+        });
     }, timeToEnd - curTime);
 }
 
-function KillPlayer(message, killedPlayer, authorData, killedData, game)
+function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
 {
     let curTime = Date.now()
     let timeToRevive = curTime + game.respawnTime;
@@ -139,7 +161,7 @@ function KillPlayer(message, killedPlayer, authorData, killedData, game)
                 return console.error(err);
             }
         });
-        ReviveTimer(killedPlayer);
+        ReviveTimer(client, killedPlayer);
 
         let points = authorData.points + 1;
 

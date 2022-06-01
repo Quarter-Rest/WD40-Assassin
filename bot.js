@@ -100,7 +100,7 @@ for (const folder of commandFolders) {
 		client.commands.set(command.name, command);
 
         // If the command has a timerhandler, run that now.
-        if(typeof command.timerHandler === "function") command.timerHandler();
+        if(typeof command.timerHandler === "function") command.timerHandler(client);
 	}
 }
 
