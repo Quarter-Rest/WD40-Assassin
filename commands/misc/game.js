@@ -56,6 +56,8 @@ module.exports = {
                             message.channel.send("SQL Failed");
                             return console.error(err);
                         }
+
+                        message.channel.send(`Set respawn time to ${args[1]} minutes.`);
                     });
                 }
             });
