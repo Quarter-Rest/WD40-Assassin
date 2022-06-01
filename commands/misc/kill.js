@@ -183,6 +183,14 @@ function RandomTarget(client, player, playerData, players)
                 message.channel.send(`Could not send DM to ${player.tag}.\n`);
             });
         })
+
+        // update player as alive and reset points
+        global.con.query(`UPDATE players SET targetid = ${randomPlayer.id} WHERE id = ${player.id}`, (err, row) => {
+            // Return if there is an error
+            if (err) {
+                return console.error(err);
+            }
+        });
     });
 }
 
