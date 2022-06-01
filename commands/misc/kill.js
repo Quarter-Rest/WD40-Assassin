@@ -102,8 +102,9 @@ function KillPlayer(message, killedPlayer, authorData, killedData)
     // Killed target
     if(authorData.targetid == killedData.id)
     {
+        let curTime = Date.Now()
         // Kill player
-        global.con.query(`UPDATE players SET alive = false WHERE id = ${killedPlayer.id}`, (err, row) => {
+        global.con.query(`UPDATE players SET alive = false, deadTime = ${curTime} WHERE id = ${killedPlayer.id}`, (err, row) => {
             if (err) {
                 message.channel.send("SQL Failed");
                 return console.error(err);
