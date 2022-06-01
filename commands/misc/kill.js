@@ -73,7 +73,8 @@ module.exports = {
 
                         if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') 
                         {
-                            KillPlayer(message, user, authorData);
+                            let killedData = players.find( ({ id }) => id === killedPlayer.id );
+                            KillPlayer(message, user, authorData, killedData);
                         } 
                         else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
                         {
@@ -96,10 +97,8 @@ module.exports = {
 	},
 };
 
-function KillPlayer(message, killedPlayer, authorData)
+function KillPlayer(message, killedPlayer, authorData, killedData)
 {
-    let killedData = players.find( ({ id }) => id === killedPlayer.id );
-    console.log(killedData)
     // Killed target
     if(authorData.targetid == killedData.id)
     {
