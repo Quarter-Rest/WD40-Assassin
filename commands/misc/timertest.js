@@ -10,9 +10,9 @@ module.exports = {
 	execute(message, args) {
 		message.channel.send({ content: "Timer Start." });
         let curTime = Date.now();
-        let timeToEnd = curTime + 10000;
+        let timeToEnd = curTime + 1000;
         setTimeout(() => {
             message.channel.send({ content: "Timer End after 1 second." });
-        }, curTime - timeToEnd);
+        }, timeToEnd - curTime);
 	},
 };
