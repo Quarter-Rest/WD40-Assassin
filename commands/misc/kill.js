@@ -142,7 +142,7 @@ function KillPlayer(message, killedPlayer, authorData, killedData)
             }
         });
 
-        message.channel.send(`<@&${global.roleID}>. ${message.author.username} was killed by their target: ${killedPlayer.username}!`);
+        message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by their target: ${message.author.username}!`);
     }
     // Unrelated player
     else
