@@ -125,7 +125,6 @@ function ReviveTimer(client, playerData)
 {
     let curTime = Date.now();
     let timeToEnd = playerData.timeToRevive;
-    console.log(`Total time: ${timeToEnd - curTime}`);
     setTimeout(() => {
         global.con.query(`UPDATE players SET alive = true, timeToRevive = 0 WHERE id = ${playerData.id}`, (err, row) => {
             if (err) {
@@ -154,6 +153,7 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
     let curTime = Date.now()
     let timeToRevive = curTime + game.respawnTime;
     let timeToGetNewTarget = curTime + game.newTargetTime;
+
     // Killed target
     if(authorData.targetid == killedPlayer.id)
     {
@@ -163,7 +163,7 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
                 message.channel.send("SQL Failed");
                 return console.error(err);
             }
-            console.log(`Time to revive:  ${timeToRevive}`);
+            killedData.timeToRevive = timeToRevive;
             ReviveTimer(client, killedData);
         });
 
