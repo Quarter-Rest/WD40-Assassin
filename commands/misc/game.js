@@ -48,7 +48,7 @@ module.exports = {
                 {
                     if(args[1] === undefined) return;
                     let respawnTime = parseFloat(args[1]);
-                    respawnTime = respawnTime * 10000
+                    respawnTime = respawnTime * 60000
                     
                     global.con.query(`UPDATE game SET respawnTime = ${respawnTime}`, (err, row) => {
                         // Return if there is an error
