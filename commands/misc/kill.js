@@ -259,7 +259,9 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
 
         message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by their target: ${message.author.username}! (+1)`);
     }
-    // Unrelated player
+    //
+    // Unrelated player ----------------------- THIS NEEDS TO BE TESTED
+    //
     else
     {
         global.con.query(`UPDATE players SET alive = false, targetid = '0' WHERE id = ${message.author.id}`, (err, row) => {
