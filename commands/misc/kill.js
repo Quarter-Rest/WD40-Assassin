@@ -130,7 +130,7 @@ function KillPlayer(message, killedPlayer, authorData, killedData, game)
     let timeToRevive = curTime + game.respawnTime;
     let timeToGetNewTarget = curTime + game.newTargetTime;
     // Killed target
-    if(authorData.targetid == killedData.id)
+    if(authorData.targetid == killedPlayer.id)
     {
         // Kill player
         global.con.query(`UPDATE players SET alive = false, timeToRevive = ${timeToRevive} WHERE id = ${killedPlayer.id}`, (err, row) => {
