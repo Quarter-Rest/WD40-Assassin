@@ -99,7 +99,8 @@ function KillPlayer(message, killedPlayer, authorData)
 {
     message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by ${message.author.username}!`);
 
-    if(authorData.targetid = killedPlayer.id)
+    // Killed target
+    if(authorData.targetid == killedPlayer.id)
     {
         // Kill player
         global.con.query(`UPDATE players SET alive = false WHERE id = ${killedPlayer.id}`, (err, row) => {
@@ -111,8 +112,38 @@ function KillPlayer(message, killedPlayer, authorData)
 
         let points = authorData.points + 1;
 
-        // Give point to assassin
+        // Give point to assassin 
         global.con.query(`UPDATE players SET points = ${points}, targetid = '0' WHERE id = ${message.author.id}`, (err, row) => {
+            if (err) {
+                message.channel.send("SQL Failed");
+                return console.error(err);
+            }
+        });
+    }
+    // Killed assassin
+    else if(killedPlayer.targetid == authorData.id)
+    {
+        // Kill assassin and remove target
+        global.con.query(`UPDATE players SET alive = false, targetid = '0' WHERE id = ${killedPlayer.id}`, (err, row) => {
+            if (err) {
+                message.channel.send("SQL Failed");
+                return console.error(err);
+            }
+        });
+
+        let points = authorData.points + 1;
+        // Give point to target
+        global.con.query(`UPDATE players SET points = ${points} WHERE id = ${message.author.id}`, (err, row) => {
+            if (err) {
+                message.channel.send("SQL Failed");
+                return console.error(err);
+            }
+        });
+    }
+    // Unrelated player
+    else
+    {
+        global.con.query(`UPDATE players SET alive = false, targetid = '0' WHERE id = ${message.author.id}`, (err, row) => {
             if (err) {
                 message.channel.send("SQL Failed");
                 return console.error(err);
