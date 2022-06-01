@@ -12,7 +12,6 @@ module.exports = {
         }
 
         const commandType = args[0].toLowerCase();
-        console.log(commandType);
 
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
             if(err)
@@ -45,7 +44,7 @@ module.exports = {
                     EndGame(message, game, players);
                 }
 
-                if(commandType == "respawnTime")
+                if(commandType == "respawntime")
                 {
                     if(args[1] === undefined) return;
                     let respawnTime = parseInt(args[1]);
