@@ -164,7 +164,7 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
                 return console.error(err);
             }
             console.log(`Time to revive:  ${timeToRevive}`);
-            ReviveTimer(client, killedPlayer);
+            ReviveTimer(client, killedData);
         });
 
         let points = authorData.points + 1;
