@@ -128,9 +128,7 @@ function ReviveTimer(client, playerData)
             // DM player
             client.users.fetch(playerData.id).then(player => {
                 player.send(`You are now revived.`).then(() => 
-                {
-                    if (message.channel.type === "dm") return;
-                })
+                {})
                 .catch((error) => 
                 {
                     // On failing, throw error.
@@ -138,8 +136,6 @@ function ReviveTimer(client, playerData)
                         `Could not send DM to ${player.tag}.\n`,
                         error
                     );
-
-                    message.channel.send(`Could not send DM to ${player.tag}.\n`);
                 });
             });
         });
