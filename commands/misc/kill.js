@@ -88,7 +88,7 @@ module.exports = {
                     .catch(collected => 
                     {
                         message.channel.send('Guess the bullet missed due to an error.');
-                        console.log(collected)
+                        console.error(collected)
                     });
                 })
             });
