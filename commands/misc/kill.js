@@ -97,8 +97,6 @@ module.exports = {
 
 function KillPlayer(message, killedPlayer, authorData)
 {
-    message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by ${message.author.username}!`);
-
     // Killed target
     if(authorData.targetid == killedPlayer.id)
     {
@@ -119,6 +117,8 @@ function KillPlayer(message, killedPlayer, authorData)
                 return console.error(err);
             }
         });
+
+        message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by their assassin: ${message.author.username}!`);
     }
     // Killed assassin
     else if(killedPlayer.targetid == authorData.id)
@@ -139,6 +139,8 @@ function KillPlayer(message, killedPlayer, authorData)
                 return console.error(err);
             }
         });
+
+        message.channel.send(`<@&${global.roleID}>. ${message.author.username} was killed by their target: ${killedPlayer.username}!`);
     }
     // Unrelated player
     else
@@ -148,6 +150,8 @@ function KillPlayer(message, killedPlayer, authorData)
                 message.channel.send("SQL Failed");
                 return console.error(err);
             }
+
+            message.channel.send(`<@&${global.roleID}>. ${message.author.username} tried to RDM ${killedPlayer.username} and is now dead!`);
         });
     }
 }
