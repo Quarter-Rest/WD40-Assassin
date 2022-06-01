@@ -134,7 +134,9 @@ function ReviveTimer(client, playerData)
             // DM player
             client.users.fetch(playerData.id).then(player => {
                 player.send(`You are now revived.`).then(() => 
-                {})
+                {
+                    RandomTarget(client, player, playerData);
+                })
                 .catch((error) => 
                 {
                     // On failing, throw error.
@@ -148,6 +150,42 @@ function ReviveTimer(client, playerData)
     }, timeToEnd - curTime);
 }
 
+function RandomTarget(client, player, playerData, players)
+{
+    global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+        if(err)
+        {
+            console.error(err);
+            return;
+        }
+
+        let players = results;
+
+        // Do a bit of randomization on all other players
+        let otherPlayers = players.filter(data => data.id != playerData.id);
+
+        let keys = Object.values(otherPlayers);
+        let randomPlayer = keys[ keys.length * Math.random() << 0];
+
+        client.users.fetch(randomPlayer.id).then(target => {
+            targetName = target.username;
+            
+            player.send(`New Target: ${targetName}`).then(() => 
+            {})
+            .catch((error) => 
+            {
+                // On failing, throw error.
+                console.error(
+                    `Could not send DM to ${player.tag}.\n`,
+                    error
+                );
+
+                message.channel.send(`Could not send DM to ${player.tag}.\n`);
+            });
+        })
+    });
+}
+
 function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
 {
     let curTime = Date.now()
@@ -158,7 +196,7 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
     if(authorData.targetid == killedPlayer.id)
     {
         // Kill player
-        global.con.query(`UPDATE players SET alive = false, timeToRevive = ${timeToRevive} WHERE id = ${killedPlayer.id}`, (err, row) => {
+        global.con.query(`UPDATE players SET alive = false, targetid = '0', timeToRevive = ${timeToRevive} WHERE id = ${killedPlayer.id}`, (err, row) => {
             if (err) {
                 message.channel.send("SQL Failed");
                 return console.error(err);
@@ -183,11 +221,14 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
     else if(killedData.targetid == authorData.id)
     {
         // Kill assassin and remove target
-        global.con.query(`UPDATE players SET alive = false, targetid = '0' WHERE id = ${killedPlayer.id}`, (err, row) => {
+        global.con.query(`UPDATE players SET alive = false, timeToRevive = ${timeToRevive}, targetid = '0' WHERE id = ${killedPlayer.id}`, (err, row) => {
             if (err) {
                 message.channel.send("SQL Failed");
                 return console.error(err);
             }
+
+            killedData.timeToRevive = timeToRevive;
+            ReviveTimer(client, killedData);
         });
 
         let points = authorData.points + 1;
@@ -209,6 +250,8 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
                 message.channel.send("SQL Failed");
                 return console.error(err);
             }
+            authorData.timeToRevive = timeToRevive;
+            ReviveTimer(client, authorData);
 
             message.channel.send(`<@&${global.roleID}>. ${message.author.username} tried to RDM ${killedPlayer.username} and is now dead!`);
         });
