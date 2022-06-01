@@ -73,7 +73,7 @@ module.exports = {
 
                         if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') 
                         {
-                            let killedData = players.find( ({ id }) => id === killedPlayer.id );
+                            let killedData = players.find( ({ id }) => id === user.id );
                             KillPlayer(message, user, authorData, killedData);
                         } 
                         else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
