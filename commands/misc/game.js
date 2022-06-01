@@ -46,6 +46,7 @@ module.exports = {
 
                 if(commandType == "respawnTime")
                 {
+                    console.log("Here")
                     if(args[1] === undefined) return;
                     let respawnTime = parseInt(args[1]);
                     respawnTime = respawnTime * 10000
