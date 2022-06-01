@@ -1,7 +1,7 @@
 const { createConnection } = require('mysql2');
 module.exports = {
 	name: "game",
-    description: "Game commands",
+    description: "Game commands. Start, end, respawnTime, newTargetTime",
 
 	execute(message, args) 
     {
@@ -42,6 +42,20 @@ module.exports = {
                 if(commandType == "end")
                 {
                     EndGame(message, game, players);
+                }
+
+                if(commandType == "respawnTime")
+                {
+                    if(args[1] === undefined) return;
+                    let respawnTime = parseInt(args[1]);
+                    
+                    global.con.query(`UPDATE game SET respawnTime = ${respawnTime}`, (err, row) => {
+                        // Return if there is an error
+                        if (err) {
+                            message.channel.send("SQL Failed");
+                            return console.error(err);
+                        }
+                    });
                 }
             });
         });

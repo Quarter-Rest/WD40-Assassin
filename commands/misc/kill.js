@@ -74,7 +74,7 @@ module.exports = {
                         if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') 
                         {
                             let killedData = players.find( ({ id }) => id === user.id );
-                            KillPlayer(message, user, authorData, killedData);
+                            KillPlayer(message, user, authorData, killedData, game);
                         } 
                         else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
                         {
@@ -97,14 +97,16 @@ module.exports = {
 	},
 };
 
-function KillPlayer(message, killedPlayer, authorData, killedData)
+function KillPlayer(message, killedPlayer, authorData, killedData, game)
 {
+    let curTime = Date.Now()
+    let timeToRevive = curTime + game.respawnTime;
+    let timeToGetNewTarget = curTime + game.newTargetTime;
     // Killed target
     if(authorData.targetid == killedData.id)
     {
-        let curTime = Date.Now()
         // Kill player
-        global.con.query(`UPDATE players SET alive = false, deadTime = ${curTime} WHERE id = ${killedPlayer.id}`, (err, row) => {
+        global.con.query(`UPDATE players SET alive = false, timeToRevive = ${timeToRevive} WHERE id = ${killedPlayer.id}`, (err, row) => {
             if (err) {
                 message.channel.send("SQL Failed");
                 return console.error(err);
