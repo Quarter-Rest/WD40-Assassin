@@ -162,8 +162,8 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
                 message.channel.send("SQL Failed");
                 return console.error(err);
             }
+            ReviveTimer(client, killedPlayer);
         });
-        ReviveTimer(client, killedPlayer);
 
         let points = authorData.points + 1;
 
