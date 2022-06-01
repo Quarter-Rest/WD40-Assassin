@@ -150,7 +150,7 @@ function ReviveTimer(client, playerData)
     }, timeToEnd - curTime);
 }
 
-function RandomTarget(client, player, playerData, players)
+function RandomTarget(client, player, playerData)
 {
     global.con.query('SELECT * FROM `players`', function(err, results, fields) {
         if(err)
@@ -215,6 +215,17 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
 
         let points = authorData.points + 1;
 
+        // In the rare case that a target went both ways, add an extra point.
+        if(killedData.targetid == authorData.id)
+        {
+            points = points + 1;
+            message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by their assassin: ${message.author.username} who was also their target! (+2)`);
+        }
+        else
+        {
+            message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by their assassin: ${message.author.username}! (+1)`);
+        }
+
         // Give point to assassin 
         global.con.query(`UPDATE players SET points = ${points}, targetid = '0' WHERE id = ${message.author.id}`, (err, row) => {
             if (err) {
@@ -222,8 +233,6 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
                 return console.error(err);
             }
         });
-
-        message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by their assassin: ${message.author.username}!`);
     }
     // Killed assassin
     else if(killedData.targetid == authorData.id)
@@ -248,7 +257,7 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
             }
         });
 
-        message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by their target: ${message.author.username}!`);
+        message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by their target: ${message.author.username}! (+1)`);
     }
     // Unrelated player
     else
@@ -261,7 +270,44 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
             authorData.timeToRevive = timeToRevive;
             ReviveTimer(client, authorData);
 
-            message.channel.send(`<@&${global.roleID}>. ${message.author.username} tried to RDM ${killedPlayer.username} and is now dead!`);
+            message.channel.send(`<@&${global.roleID}>. ${message.author.username} tried to RDM ${killedPlayer.username} and is now dead! (+0)`);
+            message.channel.send(`${message.author.username}'s assassin will receive a point and get a new target as if they made the kill.`);
+        });
+
+        global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+            if(err)
+            {
+                console.error(err);
+                return;
+            }
+    
+            let players = results;
+            players.forEach(playerData => {
+                if(playerData.targetid == authorData.id) 
+                {
+                    let points = playerData.points + 1;
+                    global.con.query(`UPDATE players SET targetid = '0', points = ${points} WHERE id = ${message.author.id}`, (err, row) => {
+                        if (err) {
+                            return console.error(err);
+                        }
+                    });
+
+                    client.users.fetch(playerData.id).then(player => {
+                        player.send(`Your target died and you have recieved a point.`).then(() => 
+                        {})
+                        .catch((error) => 
+                        {
+                            // On failing, throw error.
+                            console.error(
+                                `Could not send DM to ${player.tag}.\n`,
+                                error
+                            );
+                        });
+                    })
+
+                    return;
+                }
+            });
         });
     }
 }
