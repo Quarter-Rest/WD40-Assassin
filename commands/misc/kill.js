@@ -109,7 +109,7 @@ module.exports = {
             let players = results;
 
             players.forEach(playerData => {
-                ReviveTimer(client, playerData);
+                if(playerData.alive == 0) ReviveTimer(client, playerData);
             });
         });
     },
