@@ -98,6 +98,7 @@ module.exports = {
 function KillPlayer(message, killedPlayer, authorData)
 {
     let killedData = players.find( ({ id }) => id === killedPlayer.id );
+    console.log(killedData)
     // Killed target
     if(authorData.targetid == killedData.id)
     {
