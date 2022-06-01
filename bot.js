@@ -101,6 +101,8 @@ for (const folder of commandFolders) {
 	for (const file of commandFiles) {
 		const command = require(`./commands/${folder}/${file}`);
 		client.commands.set(command.name, command);
+
+        // If the command has a timerhandler, run that now.
         if(typeof command.timerHandler === "function") command.timerHandler();
 	}
 }
