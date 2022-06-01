@@ -126,7 +126,7 @@ function ReviveTimer(playerData)
 
 function KillPlayer(message, killedPlayer, authorData, killedData, game)
 {
-    let curTime = Date.Now()
+    let curTime = Date.now()
     let timeToRevive = curTime + game.respawnTime;
     let timeToGetNewTarget = curTime + game.newTargetTime;
     // Killed target
