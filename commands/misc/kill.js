@@ -139,6 +139,7 @@ function KillPlayer(message, killedPlayer, authorData, killedData, game)
                 return console.error(err);
             }
         });
+        ReviveTimer(killedPlayer);
 
         let points = authorData.points + 1;
 
