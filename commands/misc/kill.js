@@ -97,6 +97,8 @@ module.exports = {
 
 function KillPlayer(message, killedPlayer, authorData)
 {
+    console.log(authorData)
+    console.log(killedPlayer)
     // Killed target
     if(authorData.targetid == killedPlayer.id)
     {

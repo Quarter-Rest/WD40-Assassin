@@ -75,7 +75,6 @@ function StartGame(message, game, players)
                 //let keys = Object.values(otherPlayers);
                 //let randomPlayer = keys[ keys.length * Math.random() << 0];
 
-                console.log(`PlayerIndex: ${playerIndex}`);
                 let randomPlayer = players[playerIndex];
                 playerIndex = playerIndex + 1;
                 if(playerIndex > players.length - 1) playerIndex = 0;
