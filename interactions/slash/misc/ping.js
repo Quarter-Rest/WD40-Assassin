@@ -45,8 +45,8 @@ module.exports = {
 			);
 
 		await interaction.reply({ content: 'Pong!', components: [row] });
-        await interaction.deferUpdate();
-		await wait(4000);
-		await interaction.editReply({ content: 'Something was selected!', components: [] });
+        interaction.fetchReply()
+        .then(reply => interaction.channel.send("Replied!"))
+        .catch(console.error);
 	},
 };
