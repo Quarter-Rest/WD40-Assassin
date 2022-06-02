@@ -45,7 +45,7 @@ module.exports = {
 			);
 
 		await interaction.reply({ content: 'Pong!', components: [row] });
-        interaction.fetchReply()
+        await interaction.fetchReply()
         .then(reply => interaction.channel.send(`Replied wtih: ${reply.content}`))
         .catch(console.error);
 	},
