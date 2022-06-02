@@ -45,6 +45,5 @@ module.exports = {
 			);
 
 		await interaction.reply({ content: 'Pong!', components: [row] });
-        await interaction.update({ content: 'Something was selected!', components: [] });
 	},
 };
