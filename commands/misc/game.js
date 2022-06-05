@@ -190,7 +190,7 @@ function EndGame(message, game)
 
 function MondayReset(client, players)
 {
-    clock.on('sunday 21:52', function (date) {
+    clock.on('monday 12:00', function (date) {
         // Start index at one and wrap around on the last player
         let playerIndex = 1;
         players.forEach(playerData => {
