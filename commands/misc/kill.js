@@ -183,14 +183,37 @@ function RandomTarget(client, player, playerData)
         // Do a bit of randomization on all other players
         let otherPlayers = players.filter(data => data.id != playerData.id);
 
+        // Removed dead players
+        otherPlayers = otherPlayers.filter(data => data.alive != 0);
+        
+        console.log(otherPlayers);
+        // Make sure there is at least one alive player
+        if(otherPlayers.length === 0)
+        {
+            player.send(`Could not get new target because everyone is dead. Trying again in one hour.`).then(() => {
+                playerData.timeToGetNewTarget = Date.now() + 3600000;
+            })
+            .catch((error) => 
+            {
+                // On failing, throw error.
+                console.error(
+                    `Could not send DM to ${player.tag}.\n`,
+                    error
+                );
+
+                message.channel.send(`Could not send DM to ${player.tag}.\n`);
+            });
+
+            return;
+        }
+        
         let keys = Object.values(otherPlayers);
         let randomPlayer = keys[ keys.length * Math.random() << 0];
 
         client.users.fetch(randomPlayer.id).then(target => {
             targetName = target.username;
             
-            player.send(`New Target: ${targetName}`).then(() => 
-            {})
+            player.send(`New Target: ${targetName}`).then(() => {})
             .catch((error) => 
             {
                 // On failing, throw error.
