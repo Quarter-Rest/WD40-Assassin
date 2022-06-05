@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const kill = require('./kill');
 module.exports = {
 	name: "revive",
     description: "Revive another player.",
@@ -46,6 +47,8 @@ module.exports = {
                 }
 
                 message.channel.send(`<@${user.id}> revived!`);
+                const killCommand = message.client.commands.get("kill");
+                killCommand.RandomTarget(message.client, user, userData);
             });
             
         });
