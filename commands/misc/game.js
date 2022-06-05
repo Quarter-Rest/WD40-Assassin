@@ -138,7 +138,7 @@ function StartGame(message, game, players)
 
 
                 // update player as alive and reset points
-                global.con.query(`UPDATE players SET alive = true, targetid = ${randomPlayer.id}, points = 0, timeToRevive = 0, timeToGetNewTarget = 0 WHERE id = ${player.id}`, (err, row) => {
+                global.con.query(`UPDATE players SET alive = true, targetid = ${randomPlayer.id}, timeToRevive = 0, timeToGetNewTarget = 0 WHERE id = ${player.id}`, (err, row) => {
                     // Return if there is an error
                     if (err) {
                         message.channel.send("SQL Failed");
@@ -178,10 +178,43 @@ function EndGame(message, game)
     }
 }
 
-function MondayReset()
+function MondayReset(client, players, )
 {
-    clock.on('sunday 21:46', function (date) {
-        console.log("Yep it sure is!");
+    clock.on('sunday 21:49', function (date) {
+        // Start index at one and wrap around on the last player
+        let playerIndex = 1;
+        players.forEach(playerData => {
+            client.users.fetch(playerData.id).then(player => {
+                let targetName = "error send griffon a dm";
+
+                let randomPlayer = players[playerIndex];
+                playerIndex = playerIndex + 1;
+                if(playerIndex > players.length - 1) playerIndex = 0;
+
+                client.users.fetch(randomPlayer.id).then(target => {
+                    targetName = target.username;
+                    
+                    player.send(`Monday reset! New target: ${targetName}`).then(() => {})
+                    .catch((error) => 
+                    {
+                        // On failing, throw error.
+                        console.error(
+                            `Could not send DM to ${player.tag}.\n`,
+                            error
+                        );
+                    });
+                })
+
+
+                // update player as alive and reset points
+                global.con.query(`UPDATE players SET alive = true, targetid = ${randomPlayer.id}, timeToRevive = 0, timeToGetNewTarget = 0 WHERE id = ${player.id}`, (err, row) => {
+                    // Return if there is an error
+                    if (err) {
+                        return console.error(err);
+                    }
+                });
+            })
+        })
     })
 
 }
