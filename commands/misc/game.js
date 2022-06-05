@@ -180,11 +180,8 @@ function EndGame(message, game)
 
 function MondayReset()
 {
-    clock.on('sunday 17:42', function (date) {
-        console.log("Yep it sure is!");
-    })
-
-    clock.on('second', function (sec) {
-        console.log(60 - sec)
+    clock.on('*:*', function (date) {
+        console.log('Also known as ' + date)
+        clock.removeAllListeners()
     })
 }
