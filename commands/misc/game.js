@@ -1,5 +1,5 @@
 const { createConnection } = require('mysql2');
-const clock = require('date-events')()
+var clock = require('date-events')()
 module.exports = {
 	name: "game",
     description: "Game commands. Start, end, respawnTime(minutes), newTargetTime(minutes)",
@@ -182,5 +182,9 @@ function MondayReset()
 {
     clock.on('sunday 16:41', function (date) {
         console.log("Yep it sure is!");
+    })
+
+    clock.on('second', function (sec) {
+        console.log(60 - sec)
     })
 }
