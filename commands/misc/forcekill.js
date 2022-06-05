@@ -1,3 +1,5 @@
+const kill = require("./kill");
+
 module.exports = {
 	name: "forcekill",
     description: "Admin force kill a player. Arg 1 kills Arg 2",
@@ -57,11 +59,8 @@ module.exports = {
                 return;
             }
 
-            const killCommand =
-			    message.client.commands.get("kill") ||
-			    message.client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes("kill")
-			);
-
+            const killCommand = message.client.commands.get("kill");
+            
             global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
                 if(err1)
                 {
