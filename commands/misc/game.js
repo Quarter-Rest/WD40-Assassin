@@ -84,6 +84,7 @@ module.exports = {
     timerHandler()
     {
         console.log("Running game timers.");
+        MondayReset();
     },
 };
 
