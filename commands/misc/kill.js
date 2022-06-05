@@ -116,6 +116,7 @@ module.exports = {
 
             players.forEach(playerData => {
                 if(playerData.alive == 0) ReviveTimer(client, playerData);
+                if(playerData.timeToGetNewTarget != 0) NewTargetTimer(client, playerData);
             });
         });
     },
@@ -145,6 +146,24 @@ function ReviveTimer(client, playerData)
                         error
                     );
                 });
+            });
+        });
+    }, timeToEnd - curTime);
+}
+
+function NewTargetTimer(client, playerData)
+{
+    let curTime = Date.now();
+    let timeToEnd = playerData.timeToGetNewTarget;
+    setTimeout(() => {
+        global.con.query(`UPDATE players SET alive = true, timeToGetNewTarget = 0 WHERE id = ${playerData.id}`, (err, row) => {
+            if (err) {
+                return console.error(err);
+            }
+
+            // DM player
+            client.users.fetch(playerData.id).then(player => {
+                RandomTarget(client, player, playerData);
             });
         });
     }, timeToEnd - curTime);
@@ -226,13 +245,17 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
             message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by their assassin: ${message.author.username}! (+1)`);
         }
 
-        // Give point to assassin 
-        global.con.query(`UPDATE players SET points = ${points}, targetid = '0' WHERE id = ${message.author.id}`, (err, row) => {
+        // Give point and new target (after time) to assassin 
+        global.con.query(`UPDATE players SET points = ${points}, targetid = '0', timeToGetNewTarget = ${timeToGetNewTarget} WHERE id = ${message.author.id}`, (err, row) => {
             if (err) {
                 message.channel.send("SQL Failed");
                 return console.error(err);
             }
+
+            authorData.timeToGetNewTarget = timeToGetNewTarget;
+            NewTargetTimer(client, authorData);
         });
+
     }
     // Killed assassin
     else if(killedData.targetid == authorData.id)
@@ -285,6 +308,7 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
     
             let players = results;
             players.forEach(playerData => {
+                // Find player's assassin
                 if(playerData.targetid == authorData.id) 
                 {
                     let points = playerData.points + 1;
@@ -295,8 +319,11 @@ function KillPlayer(client, message, killedPlayer, authorData, killedData, game)
                     });
 
                     client.users.fetch(playerData.id).then(player => {
-                        player.send(`Your target died and you have recieved a point.`).then(() => 
-                        {})
+                        player.send(`Your target died and you have recieved a point. You will get a new target after six hours.`).then(() => 
+                        {
+                            playerData.timeToGetNewTarget = timeToGetNewTarget;
+                            NewTargetTimer(client, playerData);
+                        })
                         .catch((error) => 
                         {
                             // On failing, throw error.

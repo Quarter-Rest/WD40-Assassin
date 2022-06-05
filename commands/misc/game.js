@@ -60,6 +60,23 @@ module.exports = {
                         message.channel.send(`Set respawn time to ${args[1]} minutes.`);
                     });
                 }
+
+                if(commandType == "newtargettime")
+                {
+                    if(args[1] === undefined) return;
+                    let newTargetTime = parseFloat(args[1]);
+                    newTargetTime = newTargetTime * 60000
+                    
+                    global.con.query(`UPDATE game SET newTargetTime = ${newTargetTime}`, (err, row) => {
+                        // Return if there is an error
+                        if (err) {
+                            message.channel.send("SQL Failed");
+                            return console.error(err);
+                        }
+
+                        message.channel.send(`Set new target time to ${args[1]} minutes.`);
+                    });
+                }
             });
         });
 	},
