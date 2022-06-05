@@ -2,13 +2,19 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	name: "player",
     aliases: "players",
-    description: "Player commands",
+    description: "Player commands. Get | Add | Remove",
 
 	execute(message, args) 
     {
         if (global.adminIDs.includes(message.author.id) == false)
         {
             message.channel.send("You can't do this.")
+            return;
+        }
+
+        if(args[0] === undefined)
+        {
+            message.channel.send("Expected a command. Get | Add | Remove ")
             return;
         }
 
