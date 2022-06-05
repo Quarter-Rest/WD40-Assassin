@@ -24,7 +24,7 @@ module.exports = {
                 return; 
             }
 
-            const user = message.mentions.users[1];
+            const user = message.mentions.users.last();
             if (user === undefined) 
             {
                 message.reply("Second arg is not a valid user.");
