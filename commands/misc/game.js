@@ -1,4 +1,5 @@
 const { createConnection } = require('mysql2');
+const clock = require('date-events')()
 module.exports = {
 	name: "game",
     description: "Game commands. Start, end, respawnTime(minutes), newTargetTime(minutes)",
@@ -174,4 +175,11 @@ function EndGame(message, game)
             }
         });
     }
+}
+
+function MondayReset()
+{
+    clock.on('sunday 17:31', function (date) {
+        console.log("Yep it sure is!");
+    })
 }

@@ -277,6 +277,11 @@
   "resolved" "https://registry.npmjs.org/crypto-random-string/-/crypto-random-string-2.0.0.tgz"
   "version" "2.0.0"
 
+"date-events@^1.0.1":
+  "integrity" "sha512-9Iu5SkOcL15s9petYCOUBKMKVVkxHkzXzJzJmVwBWaWI3rbjyo4oxe78d2uBnvHKHCj2DM0Dw+1Xvu2Au0WL2g=="
+  "resolved" "https://registry.npmjs.org/date-events/-/date-events-1.0.1.tgz"
+  "version" "1.0.1"
+
 "debug@^3.2.7":
   "integrity" "sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-3.2.7.tgz"
