@@ -12,13 +12,16 @@ module.exports = {
             return;
         }
 
+        const commandType = "";
+
         if(args[0] === undefined)
         {
-            message.channel.send("Expected a command. Get | Add | Remove ")
-            return;
+            commandType = "get"
         }
-
-        const commandType = args[0].toLowerCase();
+        else
+        {
+            commandType = args[0].toLowerCase();
+        }
 
         if(commandType == "add")
         {
