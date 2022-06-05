@@ -79,7 +79,7 @@ execute(message, args)
 
                     if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') 
                     {
-                        this.KillPlayer(message.client, message, user, authorData, userData, game);
+                        module.exports.KillPlayer(message.client, message, user, authorData, userData, game);
                     } 
                     else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
                     {
