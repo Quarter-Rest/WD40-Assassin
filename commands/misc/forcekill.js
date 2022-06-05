@@ -58,8 +58,8 @@ module.exports = {
             }
 
             const killCommand =
-			    client.commands.get("kill") ||
-			    client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes("kill")
+			    message.client.commands.get("kill") ||
+			    message.client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes("kill")
 			);
 
             global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
