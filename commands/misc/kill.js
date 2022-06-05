@@ -105,19 +105,36 @@ module.exports = {
     {
         console.log("Running kill timers.");
 
-        global.con.query('SELECT * FROM `players`', function(err, results, fields) {
-            if(err)
+        global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
+            if(err1)
             {
-                message.channel.send("SQL Failed")
-                console.error(err);
+                message.channel.send("SQL failed.");
+                console.error(err1);
+                return;
             }
 
-            let players = results;
+            let game = results1[0];
+            if(game.running === 0)
+            {
+                console.log("No game running so no need for kill timers.")
+                return;
+            }
 
-            players.forEach(playerData => {
-                if(playerData.alive == 0) ReviveTimer(client, playerData);
-                if(playerData.timeToGetNewTarget != 0) NewTargetTimer(client, playerData);
+            global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+                if(err)
+                {
+                    message.channel.send("SQL Failed")
+                    console.error(err);
+                }
+    
+                let players = results;
+    
+                players.forEach(playerData => {
+                    if(playerData.alive == 0) ReviveTimer(client, playerData);
+                    if(playerData.timeToGetNewTarget != 0) NewTargetTimer(client, playerData);
+                });
             });
+
         });
     },
 };
@@ -192,6 +209,7 @@ function RandomTarget(client, player, playerData)
         {
             player.send(`Could not get new target because everyone is dead. Trying again in one hour.`).then(() => {
                 playerData.timeToGetNewTarget = Date.now() + 3600000;
+                NewTargetTimer(client, playerData);
             })
             .catch((error) => 
             {
@@ -200,8 +218,6 @@ function RandomTarget(client, player, playerData)
                     `Could not send DM to ${player.tag}.\n`,
                     error
                 );
-
-                message.channel.send(`Could not send DM to ${player.tag}.\n`);
             });
 
             return;
