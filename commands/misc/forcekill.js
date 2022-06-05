@@ -57,6 +57,11 @@ module.exports = {
                 return;
             }
 
+            const killCommand =
+			    client.commands.get("kill") ||
+			    client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes("kill")
+			);
+
             global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
                 if(err1)
                 {
@@ -84,7 +89,7 @@ module.exports = {
 
                         if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') 
                         {
-                            KillPlayer(message.client, message, user, authorData, userData, game);
+                            killCommand.KillPlayer(message.client, message, user, authorData, userData, game);
                         } 
                         else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
                         {

@@ -138,6 +138,11 @@ timerHandler(client)
 },
 KillPlayer(client, message, killedPlayer, authorData, killedData, game)
 {
+    if(game.running === 0 || game.running === false)
+    {
+        return;
+    }
+
     let curTime = Date.now()
     let timeToRevive = curTime + game.respawnTime;
     let timeToGetNewTarget = curTime + game.newTargetTime;
