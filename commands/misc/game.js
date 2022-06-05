@@ -81,7 +81,7 @@ module.exports = {
             });
         });
 	},
-    timerHandler()
+    timerHandler(client)
     {
         console.log("Running game timers.");
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
@@ -190,7 +190,7 @@ function EndGame(message, game)
 
 function MondayReset(client, players)
 {
-    clock.on('sunday 21:51', function (date) {
+    clock.on('sunday 21:52', function (date) {
         // Start index at one and wrap around on the last player
         let playerIndex = 1;
         players.forEach(playerData => {
