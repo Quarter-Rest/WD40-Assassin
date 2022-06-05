@@ -84,7 +84,17 @@ module.exports = {
     timerHandler()
     {
         console.log("Running game timers.");
-        MondayReset();
+        global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+            if(err)
+            {
+                message.channel.send("SQL failed.");
+                return;
+            }
+
+            let players = results;
+            MondayReset(client, players);
+
+        });
     },
 };
 
@@ -178,9 +188,9 @@ function EndGame(message, game)
     }
 }
 
-function MondayReset(client, players, )
+function MondayReset(client, players)
 {
-    clock.on('sunday 21:50', function (date) {
+    clock.on('sunday 21:51', function (date) {
         // Start index at one and wrap around on the last player
         let playerIndex = 1;
         players.forEach(playerData => {
