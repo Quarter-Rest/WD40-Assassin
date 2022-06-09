@@ -17,7 +17,7 @@ module.exports = {
         }
 
         commandType = args[0].toLowerCase();
-		
+
 		if(commandType == "reset")
 		{
 			global.con.query(`UPDATE players SET points = 0`, (err, row) => {
@@ -84,7 +84,7 @@ module.exports = {
 				let players = results;
 
 
-				let newPoints = args[2];
+				let newPoints = parseInt(args[2]);
 				players.some(element => {
                     if (element.id === user.id) {
                         newPoints = newPoints + element.points;
