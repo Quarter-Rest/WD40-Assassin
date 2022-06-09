@@ -345,10 +345,11 @@ function ReviveTimer(client, playerData)
             }
 
             // DM player
+            const killCommand = client.commands.get("kill");
             client.users.fetch(playerData.id).then(player => {
                 player.send(`You are now revived.`).then(() => 
                 {
-                    RandomTarget(client, player, playerData);
+                    killCommand.RandomTarget(client, player, playerData);
                 })
                 .catch((error) => 
                 {
@@ -374,8 +375,9 @@ function NewTargetTimer(client, playerData)
             }
 
             // DM player
+            const killCommand = client.commands.get("kill");
             client.users.fetch(playerData.id).then(player => {
-                RandomTarget(client, player, playerData);
+                killCommand.RandomTarget(client, player, playerData);
             });
         });
     }, timeToEnd - curTime);
