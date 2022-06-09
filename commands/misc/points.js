@@ -55,6 +55,8 @@ module.exports = {
 					message.channel.send("SQL Failed. Probably that player isn't in the game.");
 					return console.error(err);
 				}
+
+				message.channel.send(`Set ${user.username} points to ${newPoints}.`);
 			});
 		}
 
@@ -96,6 +98,8 @@ module.exports = {
 						message.channel.send("SQL Failed. Probably that player isn't in the game.");
 						return console.error(err);
 					}
+
+					message.channel.send(`Set ${user.username} points to ${newPoints}.`);
 				});
 			});
 		}
