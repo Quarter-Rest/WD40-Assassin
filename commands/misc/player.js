@@ -106,18 +106,40 @@ module.exports = {
 
         if(commandType == "get")
         {
-            global.con.query('SELECT * FROM `players`', function(err, results, fields) {
-                let players = results;
+            module.exports.getPlayers(message);
+        }
+        
+	},
+    getPlayers(message)
+    {
+        global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+            let players = results;
+
+            global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
+                if(err1)
+                {
+                    message.channel.send("SQL failed.");
+                    return;
+                }
+
+                let game = results1[0];
+                // bool conversion
+                if(game.running === 1) game.running = true
+                else game.running = false
 
                 let embed = new MessageEmbed()
                 .setColor('#0099ff')
-                .setTitle('Players');
+                .setTitle('Game is not running.');
+
+                if(game.running) embed.setTitle('Game is currently running.')
 
                 // We are using fetch because we wanna make sure all users are valid
                 const promises = [];
-                players.forEach(playerData => {
+                players.forEach(playerData => 
+                {
                     let getPlayer = message.client.users.fetch(playerData.id);
-                    getPlayer.then(function(player) {
+                    getPlayer.then(function(player) 
+                    {
                         let alive = false;
                         if(playerData.alive == 1) alive = true;
                         embed.addField(`${player.username}`, `**Points:** ${playerData.points}\n**Alive:** ${alive}`, false)
@@ -130,7 +152,6 @@ module.exports = {
                     message.channel.send({embeds: [embed]});
                 });
             });
-        }
-        
-	},
+        });
+    }
 };

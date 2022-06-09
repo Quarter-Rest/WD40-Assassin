@@ -1,4 +1,5 @@
 const { createConnection } = require('mysql2');
+const player = require('./player');
 var clock = require('date-events')()
 module.exports = {
 	name: "game",
@@ -46,7 +47,8 @@ module.exports = {
 
                 if(commandType == "get")
                 {
-                    message.channel.send("A game is currently running.");
+                    const playerCommand = message.client.commands.get("player");
+                    player.getPlayers(message);
                     return;
                 }
 
