@@ -27,6 +27,8 @@ module.exports = {
 					message.channel.send("SQL Failed");
 					return console.error(err);
 				}
+
+				message.channel.send(`<@&${global.roleID}>. All points resetting.`)
 			});
 			return;
 		}
