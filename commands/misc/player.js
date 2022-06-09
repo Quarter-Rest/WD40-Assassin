@@ -12,7 +12,7 @@ module.exports = {
             return;
         }
 
-        const commandType = "";
+        let commandType = "";
 
         if(args[0] === undefined)
         {
