@@ -12,7 +12,16 @@ module.exports = {
             return;
         }
 
-        const commandType = args[0].toLowerCase();
+        let commandType = "";
+
+        if(args[0] === undefined)
+        {
+            commandType = "get"
+        }
+        else
+        {
+            commandType = args[0].toLowerCase();
+        }
 
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
             if(err)
@@ -34,6 +43,12 @@ module.exports = {
                 // bool conversion
                 if(game.running === 1) game.running = true
                 else game.running = false
+
+                if(commandType == "get")
+                {
+                    message.channel.send("A game is currently running.");
+                    return;
+                }
 
                 if(commandType == "start")
                 {
