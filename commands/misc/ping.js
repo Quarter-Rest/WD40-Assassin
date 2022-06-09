@@ -8,6 +8,6 @@ module.exports = {
 	//guildOnly: true,
 
 	execute(message, args) {
-		message.channel.send({ content: "Pong. Hi nicholas..." });
+		message.channel.send({ content: "Pong. Hi nicholas...s ad sadas" });
 	},
 };

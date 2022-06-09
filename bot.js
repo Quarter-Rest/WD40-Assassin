@@ -284,3 +284,10 @@ for (const folder of triggerFolders) {
 // Login into your client application with bot's token.
 
 client.login(token);
+
+function stopEvent() {
+    console.log("Stopping test.");
+
+}
+process.addListener("SIGINT", stopEvent);
+process.addListener("SIGTERM", stopEvent);
