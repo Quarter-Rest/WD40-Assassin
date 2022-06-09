@@ -17,8 +17,7 @@ module.exports = {
         }
 
         commandType = args[0].toLowerCase();
-		console.log(commandType);
-
+		
 		if(commandType == "reset")
 		{
 			global.con.query(`UPDATE players SET points = 0`, (err, row) => {
