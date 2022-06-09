@@ -17,6 +17,7 @@ module.exports = {
         }
 
         commandType = args[0].toLowerCase();
+		console.log(commandType);
 
 		if(commandType == "reset")
 		{
