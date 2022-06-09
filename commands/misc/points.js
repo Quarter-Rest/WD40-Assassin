@@ -1,6 +1,5 @@
 module.exports = {
-	name: "point",
-	alias: "points",
+	name: "points",
 
 	execute(message, args) {
 		if (global.adminIDs.includes(message.author.id) == false)
