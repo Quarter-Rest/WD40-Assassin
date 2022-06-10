@@ -11,6 +11,7 @@ module.exports = {
             players.some(element => {
                 if (element.id === user.id) {
                     let targetID = element.targetid;
+                    console.log(targetID);
                     players.some(element2 => {
                         if (element2.id === targetID) {
                             user.send(`Current Target: ${element2.username}`).then(() => 
