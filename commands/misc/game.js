@@ -142,6 +142,7 @@ function StartGame(message, game, players)
                 //let randomPlayer = keys[ keys.length * Math.random() << 0];
                 players = players.filter(data => data.id != playerData.id);
                 players = shuffle(players);
+                console.log(players);
                 let randomPlayer = players[playerIndex];
                 playerIndex = playerIndex + 1;
                 if(playerIndex > players.length - 1) playerIndex = 0;
