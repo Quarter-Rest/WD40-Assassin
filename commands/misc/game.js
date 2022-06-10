@@ -140,6 +140,8 @@ function StartGame(message, game, players)
 
                 //let keys = Object.values(otherPlayers);
                 //let randomPlayer = keys[ keys.length * Math.random() << 0];
+                players = players.filter(data => data.id != playerData.id);
+                players = shuffle(array.filter());
                 let randomPlayer = players[playerIndex];
                 playerIndex = playerIndex + 1;
                 if(playerIndex > players.length - 1) playerIndex = 0;
@@ -214,6 +216,8 @@ function MondayReset(client, players)
             client.users.fetch(playerData.id).then(player => {
                 let targetName = "error send griffon a dm";
 
+                players = players.filter(data => data.id != playerData.id);
+                players = shuffle(players);
                 let randomPlayer = players[playerIndex];
                 playerIndex = playerIndex + 1;
                 if(playerIndex > players.length - 1) playerIndex = 0;
@@ -244,4 +248,22 @@ function MondayReset(client, players)
         })
     })
 
+}
+
+function shuffle(array) {
+	let currentIndex = array.length,  randomIndex;
+  
+	// While there remain elements to shuffle.
+	while (currentIndex != 0) {
+  
+	  // Pick a remaining element.
+	  randomIndex = Math.floor(Math.random() * currentIndex);
+	  currentIndex--;
+  
+	  // And swap it with the current element.
+	  [array[currentIndex], array[randomIndex]] = [
+		array[randomIndex], array[currentIndex]];
+	}
+  
+	return array;
 }

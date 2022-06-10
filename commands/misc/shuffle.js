@@ -30,6 +30,7 @@ module.exports = {
 
 					
 					// TODO: Test this
+                    players = players.filter(data => data.id != playerData.id);
 					players = shuffle(players);
 
 					let randomPlayer = players[playerIndex];
