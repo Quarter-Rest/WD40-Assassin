@@ -4,6 +4,8 @@ module.exports = {
 	execute(message, args) {
         global.con.query('SELECT * FROM `players`', function(err, results, fields) {
             let players = results;
+
+            message.channel.send("DM'ing you your target.")
             
             let user = message.author;
             players.some(element => {
