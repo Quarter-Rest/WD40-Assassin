@@ -126,6 +126,7 @@ function StartGame(message, game, players)
         message.channel.send(`<@&${global.roleID}>. Starting game. Sending all current players a target in their DMs.`)
 
         // Start index at one and wrap around on the last player
+        players = shuffle(players);
         let playerIndex = 1;
         players.forEach(playerData => {
             message.client.users.fetch(playerData.id).then(player => {
@@ -140,12 +141,10 @@ function StartGame(message, game, players)
 
                 //let keys = Object.values(otherPlayers);
                 //let randomPlayer = keys[ keys.length * Math.random() << 0];
-                players = players.filter(data => data.id != playerData.id);
-                players = shuffle(players);
-                console.log(players);
-                let randomPlayer = players[playerIndex];
+                let otherPlayers = players.filter(data => data.id != playerData.id);
+                let randomPlayer = otherPlayers[playerIndex];
                 playerIndex = playerIndex + 1;
-                if(playerIndex > players.length - 1) playerIndex = 0;
+                if(playerIndex > otherPlayers.length - 1) playerIndex = 0;
 
                 message.client.users.fetch(randomPlayer.id).then(target => {
                     targetName = target.username;
