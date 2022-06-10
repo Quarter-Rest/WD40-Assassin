@@ -48,7 +48,7 @@ module.exports = {
 
                     if(isFound === false)
                     {
-                        global.con.query(`INSERT INTO players (id, targetid, alive, points) values (${user.id}, '0', true, 0)`, (err, row) => {
+                        global.con.query(`INSERT INTO players (id, targetid, alive, points, timeToRevive, timeToGetNewTarget) values (${user.id}, '0', true, 0, 0, 0)`, (err, row) => {
                             // Return if there is an error
                             if (err) {
                                 message.channel.send("Failed");
