@@ -7,12 +7,6 @@ module.exports = {
 
 	execute(message, args) 
     {
-        if (global.adminIDs.includes(message.author.id) == false)
-        {
-            message.channel.send("You can't do this.")
-            return;
-        }
-
         let commandType = "";
 
         if(args[0] === undefined)
@@ -54,16 +48,31 @@ module.exports = {
 
                 if(commandType == "start")
                 {
+                    if (global.adminIDs.includes(message.author.id) == false)
+                    {
+                        message.channel.send("You can't do this.")
+                        return;
+                    }
                     StartGame(message, game, players);
                 }
 
                 if(commandType == "end")
                 {
+                    if (global.adminIDs.includes(message.author.id) == false)
+                    {
+                        message.channel.send("You can't do this.")
+                        return;
+                    }
                     EndGame(message, game, players);
                 }
 
                 if(commandType == "respawntime")
                 {
+                    if (global.adminIDs.includes(message.author.id) == false)
+                    {
+                        message.channel.send("You can't do this.")
+                        return;
+                    }
                     if(args[1] === undefined) return;
                     let respawnTime = parseFloat(args[1]);
                     respawnTime = respawnTime * 60000
@@ -81,6 +90,11 @@ module.exports = {
 
                 if(commandType == "newtargettime")
                 {
+                    if (global.adminIDs.includes(message.author.id) == false)
+                    {
+                        message.channel.send("You can't do this.")
+                        return;
+                    }
                     if(args[1] === undefined) return;
                     let newTargetTime = parseFloat(args[1]);
                     newTargetTime = newTargetTime * 60000

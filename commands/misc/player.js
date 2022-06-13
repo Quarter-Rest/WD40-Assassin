@@ -6,11 +6,6 @@ module.exports = {
 
 	execute(message, args) 
     {
-        if (global.adminIDs.includes(message.author.id) == false)
-        {
-            message.channel.send("You can't do this.")
-            return;
-        }
 
         let commandType = "";
 
@@ -25,6 +20,11 @@ module.exports = {
 
         if(commandType == "add")
         {
+            if (global.adminIDs.includes(message.author.id) == false)
+            {
+                message.channel.send("You can't do this.")
+                return;
+            }
             const user = message.mentions.users.first();
             if (user === undefined) 
             {
@@ -68,6 +68,11 @@ module.exports = {
 
         if(commandType == "remove")
         {
+            if (global.adminIDs.includes(message.author.id) == false)
+            {
+                message.channel.send("You can't do this.")
+                return;
+            }
             const user = message.mentions.users.first();
             if (user === undefined) 
             {
