@@ -41,7 +41,7 @@ execute(message, args)
         }
         console.log(userData);
 
-        if(userData.alive == 0)
+        if(userData.alive === 0)
         {
             message.reply("That player is dead.");
             return;
@@ -70,7 +70,7 @@ execute(message, args)
 
             // https://stackoverflow.com/questions/45856446/how-do-i-wait-for-a-reply-in-discord-js
             const filter = (m) => m.author.id === message.author.id;
-            message.reply("Are you sure you want to kill that player? (Type 'Yes' or 'No') This cannot be undone and everyone playing will be notified that you have done this.")
+            message.reply("Are you sure you want to kill that player? You should check who your target is first by doing !target. This cannot be undone and everyone playing will be notified that you have done this. (Type 'Yes' or 'No')")
             .then(() => 
             {
                 message.channel.awaitMessages({filter: filter, max: 1, time: 30000, errors: ['time']})
