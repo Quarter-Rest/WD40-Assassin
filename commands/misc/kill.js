@@ -39,7 +39,6 @@ execute(message, args)
             message.reply("That player isn't in the game.")
             return;
         }
-        console.log(userData);
 
         if(userData.alive === 0)
         {
