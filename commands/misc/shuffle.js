@@ -28,10 +28,7 @@ module.exports = {
 					}
 					let targetName = "error send griffon a dm";
 
-					
-					// TODO: Test this
                     let otherPlayers = players.filter(data => data.id != playerData.id);
-                    console.log(otherPlayers);
 					otherPlayers = shuffle(otherPlayers);
 
 					let randomPlayer = otherPlayers[playerIndex];
