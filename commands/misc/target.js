@@ -29,7 +29,22 @@ module.exports = {
 
 							message.channel.send(`Could not send DM to ${player.tag}.\n`);
 						});
-					})
+					}).catch(err => {
+                        user.send(`No target.`).then(() => 
+						{
+							if (message.channel.type === "dm") return;
+						})
+						.catch((error) => 
+						{
+							// On failing, throw error.
+							console.error(
+								`Could not send DM to ${player.tag}.\n`,
+								error
+							);
+
+							message.channel.send(`Could not send DM to ${player.tag}.\n`);
+						});
+                    })
                     return;
                 }
             });
