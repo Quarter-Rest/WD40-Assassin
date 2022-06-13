@@ -30,13 +30,13 @@ module.exports = {
 
 					
 					// TODO: Test this
-                    players = players.filter(data => data.id != playerData.id);
-                    console.log(players);
-					players = shuffle(players);
+                    let otherPlayers = players.filter(data => data.id != playerData.id);
+                    console.log(otherPlayers);
+					otherPlayers = shuffle(otherPlayers);
 
-					let randomPlayer = players[playerIndex];
+					let randomPlayer = otherPlayers[playerIndex];
 					playerIndex = playerIndex + 1;
-					if(playerIndex > players.length - 1) playerIndex = 0;
+					if(playerIndex > otherPlayers.length - 1) playerIndex = 0;
 
 
 					message.client.users.fetch(randomPlayer.id).then(target => {
