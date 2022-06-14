@@ -130,7 +130,7 @@ timerHandler(client)
 
             players.forEach(playerData => {
                 if(playerData.alive == 0) ReviveTimer(client, playerData);
-                if(playerData.timeToGetNewTarget != 0) NewTargetTimer(client, playerData);
+                if(playerData.timeToGetNewTarget != 0) module.exports.NewTargetTimer(client, playerData);
             });
         });
 
@@ -181,7 +181,7 @@ KillPlayer(client, message, killedPlayer, authorData, killedData, game)
             }
 
             authorData.timeToGetNewTarget = timeToGetNewTarget;
-            NewTargetTimer(client, authorData);
+            module.exports.NewTargetTimer(client, authorData);
         });
 
     }
@@ -250,7 +250,7 @@ KillPlayer(client, message, killedPlayer, authorData, killedData, game)
                         player.send(`Your target died and you have recieved a point. You will get a new target after six hours.`).then(() => 
                         {
                             playerData.timeToGetNewTarget = timeToGetNewTarget;
-                            NewTargetTimer(client, playerData);
+                            module.exports.NewTargetTimer(client, playerData);
                         })
                         .catch((error) => 
                         {
@@ -290,7 +290,7 @@ RandomTarget(client, player, playerData)
         {
             player.send(`Could not get new target because everyone is dead. Trying again in one hour.`).then(() => {
                 playerData.timeToGetNewTarget = Date.now() + 3600000;
-                NewTargetTimer(client, playerData);
+                module.exports.NewTargetTimer(client, playerData);
             })
             .catch((error) => 
             {
@@ -332,6 +332,24 @@ RandomTarget(client, player, playerData)
         });
     });
 },
+NewTargetTimer(client, playerData)
+{
+    let curTime = Date.now();
+    let timeToEnd = playerData.timeToGetNewTarget;
+    setTimeout(() => {
+        global.con.query(`UPDATE players SET alive = true, timeToGetNewTarget = 0 WHERE id = ${playerData.id}`, (err, row) => {
+            if (err) {
+                return console.error(err);
+            }
+
+            // DM player
+            const killCommand = client.commands.get("kill");
+            client.users.fetch(playerData.id).then(player => {
+                killCommand.RandomTarget(client, player, playerData);
+            });
+        });
+    }, timeToEnd - curTime);
+},
 }
 
 function ReviveTimer(client, playerData)
@@ -359,25 +377,6 @@ function ReviveTimer(client, playerData)
                         error
                     );
                 });
-            });
-        });
-    }, timeToEnd - curTime);
-}
-
-function NewTargetTimer(client, playerData)
-{
-    let curTime = Date.now();
-    let timeToEnd = playerData.timeToGetNewTarget;
-    setTimeout(() => {
-        global.con.query(`UPDATE players SET alive = true, timeToGetNewTarget = 0 WHERE id = ${playerData.id}`, (err, row) => {
-            if (err) {
-                return console.error(err);
-            }
-
-            // DM player
-            const killCommand = client.commands.get("kill");
-            client.users.fetch(playerData.id).then(player => {
-                killCommand.RandomTarget(client, player, playerData);
             });
         });
     }, timeToEnd - curTime);

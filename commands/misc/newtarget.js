@@ -38,26 +38,31 @@ module.exports = {
                 return;
             }
 
-            let otherPlayers = players.filter(data => data.id != user.id);
-            let randomPlayer = otherPlayers[Math.floor(Math.random()*otherPlayers.length)];
-            let targetName = "error send griffon a dm";
+            global.con.query('SELECT * FROM `game`', function(err1, results1, fields1) {
+                if(err1)
+                {
+                    message.channel.send("SQL failed.");
+                    console.error(err1);
+                    return;
+                }
+    
+                let game = results1[0];
+                if(game.running === 0)
+                {
+                    message.reply("There is no game running.")
+                    return;
+                }
 
-            message.client.users.fetch(randomPlayer.id).then(target => {
-                targetName = target.username;
-                
-                user.send(`New Target: ${targetName}`).then(() => 
-                {
-                    if (message.channel.type === "dm") return;
-                })
-                .catch((error) => 
-                {
-                    // On failing, throw error.
-                    console.error(
-                        `Could not send DM to ${player.tag}.\n`,
-                        error
-                    );
-                });
-            })
+                let curTime = Date.now();
+                let timeToGetNewTarget = curTime + game.newTargetTime;
+                userData.timeToGetNewTarget = timeToGetNewTarget;
+                const killCommand = message.client.commands.get("kill");
+                killCommand.NewTargetTimer(client, userData);
+
+                message.channel.send(`${user.username} will recieve a new target in six hours.`);
+
+            });
+
 		});
 	},
 };
