@@ -59,7 +59,14 @@ module.exports = {
                 const killCommand = message.client.commands.get("kill");
                 killCommand.NewTargetTimer(message.client, userData);
 
-                message.channel.send(`${user.username} will recieve a new target in six hours.`);
+                global.con.query(`UPDATE players SET targetid = '0', timeToGetNewTarget = ${timeToGetNewTarget} WHERE id = ${user.id}`, (err, row) => {
+                    // Return if there is an error
+                    if (err) {
+                        return console.error(err);
+                    }
+                    message.channel.send(`${user.username} will recieve a new target in six hours.`);
+                });
+
 
             });
 
