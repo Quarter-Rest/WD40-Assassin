@@ -57,7 +57,7 @@ module.exports = {
                 let timeToGetNewTarget = curTime + game.newTargetTime;
                 userData.timeToGetNewTarget = timeToGetNewTarget;
                 const killCommand = message.client.commands.get("kill");
-                killCommand.NewTargetTimer(client, userData);
+                killCommand.NewTargetTimer(message.client, userData);
 
                 message.channel.send(`${user.username} will recieve a new target in six hours.`);
 
