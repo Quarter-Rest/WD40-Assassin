@@ -184,6 +184,45 @@ KillPlayer(client, message, killedPlayer, authorData, killedData, game)
             module.exports.NewTargetTimer(client, authorData);
         });
 
+        global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+            if(err)
+            {
+                console.error(err);
+                return;
+            }
+    
+            let players = results;
+            players.forEach(playerData => {
+                // Find player's assassin
+                if(playerData.targetid == killedData.id) 
+                {
+                    client.users.fetch(playerData.id).then(player => {
+                        player.send(`Your target died. You will get a new target after six hours.`).then(() => 
+                        {
+                            global.con.query(`UPDATE players SET targetid = '0', timeToGetNewTarget = ${timeToGetNewTarget} WHERE id = ${playerData.id}`, (err, row) => {
+                                // Return if there is an error
+                                if (err) {
+                                    return console.error(err);
+                                }
+
+                                playerData.timeToGetNewTarget = timeToGetNewTarget;
+                                module.exports.NewTargetTimer(client, playerData);
+
+                            });
+                        })
+                        .catch((error) => 
+                        {
+                            // On failing, throw error.
+                            console.error(
+                                `Could not send DM to ${player.tag}.\n`,
+                                error
+                            );
+                        });
+                    })
+                }
+            });
+        });
+
     }
     // Killed assassin
     else if(killedData.targetid == authorData.id)
@@ -206,6 +245,45 @@ KillPlayer(client, message, killedPlayer, authorData, killedData, game)
                 message.channel.send("SQL Failed");
                 return console.error(err);
             }
+        });
+
+        global.con.query('SELECT * FROM `players`', function(err, results, fields) {
+            if(err)
+            {
+                console.error(err);
+                return;
+            }
+    
+            let players = results;
+            players.forEach(playerData => {
+                // Find player's assassin
+                if(playerData.targetid == killedData.id) 
+                {
+                    client.users.fetch(playerData.id).then(player => {
+                        player.send(`Your target died. You will get a new target after six hours.`).then(() => 
+                        {
+                            global.con.query(`UPDATE players SET targetid = '0', timeToGetNewTarget = ${timeToGetNewTarget} WHERE id = ${playerData.id}`, (err, row) => {
+                                // Return if there is an error
+                                if (err) {
+                                    return console.error(err);
+                                }
+
+                                playerData.timeToGetNewTarget = timeToGetNewTarget;
+                                module.exports.NewTargetTimer(client, playerData);
+
+                            });
+                        })
+                        .catch((error) => 
+                        {
+                            // On failing, throw error.
+                            console.error(
+                                `Could not send DM to ${player.tag}.\n`,
+                                error
+                            );
+                        });
+                    })
+                }
+            });
         });
 
         message.channel.send(`<@&${global.roleID}>. ${killedPlayer.username} was killed by their target: ${message.author.username}! (+1)`);
@@ -261,8 +339,6 @@ KillPlayer(client, message, killedPlayer, authorData, killedData, game)
                             );
                         });
                     })
-
-                    return;
                 }
             });
         });
