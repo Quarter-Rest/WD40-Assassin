@@ -23,14 +23,14 @@ module.exports = {
 						{
 							// On failing, throw error.
 							console.error(
-								`Could not send DM to ${player.tag}.\n`,
+								`Could not send DM to ${user.tag}.\n`,
 								error
 							);
 
-							message.channel.send(`Could not send DM to ${player.tag}.\n`);
+							message.channel.send(`Could not send DM to ${user.tag}.\n`);
 						});
 					}).catch(err => {
-						global.con.query(`SELECT * FROM 'players' WHERE id = ${user.id}`, function(err, results, fields) {
+						global.con.query(`SELECT "timeToGetNewTarget" FROM "players" WHERE "id" = $${user.id} LIMIT 1`, function(err, results, fields) {
 							console.log(results);
 							let minutesTillNewTarget = (results[0].timeToGetNewTarget - Date.now()) / 60000;
 							user.send(`No target. You will receive a new target in ${minutesTillNewTarget} minutes.`).then(() => 
