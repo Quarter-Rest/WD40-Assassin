@@ -40,7 +40,7 @@ module.exports = {
 
             players.some(player => {
                 if (player.id === user.id) {
-                    let otherPlayers = players.filter(data => data.id != playerData.id);
+                    let otherPlayers = players.filter(data => data.id != user.id);
                     let randomPlayer = otherPlayers[Math.floor(Math.random()*otherPlayers.length)];
                     let targetName = "error send griffon a dm";
 
