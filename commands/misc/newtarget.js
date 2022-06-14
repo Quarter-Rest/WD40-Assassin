@@ -38,31 +38,26 @@ module.exports = {
                 return;
             }
 
-            players.some(player => {
-                if (player.id === user.id) {
-                    let otherPlayers = players.filter(data => data.id != user.id);
-                    let randomPlayer = otherPlayers[Math.floor(Math.random()*otherPlayers.length)];
-                    let targetName = "error send griffon a dm";
+            let otherPlayers = players.filter(data => data.id != user.id);
+            let randomPlayer = otherPlayers[Math.floor(Math.random()*otherPlayers.length)];
+            let targetName = "error send griffon a dm";
 
-                    message.client.users.fetch(randomPlayer.id).then(target => {
-						targetName = target.username;
-						
-						player.send(`New Target: ${targetName}`).then(() => 
-						{
-							if (message.channel.type === "dm") return;
-						})
-						.catch((error) => 
-						{
-							// On failing, throw error.
-							console.error(
-								`Could not send DM to ${player.tag}.\n`,
-								error
-							);
-						});
-					})
-                }
-            });
-			
+            message.client.users.fetch(randomPlayer.id).then(target => {
+                targetName = target.username;
+                
+                user.send(`New Target: ${targetName}`).then(() => 
+                {
+                    if (message.channel.type === "dm") return;
+                })
+                .catch((error) => 
+                {
+                    // On failing, throw error.
+                    console.error(
+                        `Could not send DM to ${player.tag}.\n`,
+                        error
+                    );
+                });
+            })
 		});
 	},
 };
