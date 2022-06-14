@@ -31,7 +31,8 @@ module.exports = {
 						});
 					}).catch(err => {
 						global.con.query(`SELECT * FROM 'players' WHERE id = ${user.id}`, function(err, results, fields) {
-							let minutesTillNewTarget = (results.timeToGetNewTarget - Date.now()) / 60000;
+							console.log(results);
+							let minutesTillNewTarget = (results[0].timeToGetNewTarget - Date.now()) / 60000;
 							user.send(`No target. You will receive a new target in ${minutesTillNewTarget} minutes.`).then(() => 
 							{
 								if (message.channel.type === "dm") return;
