@@ -36,8 +36,10 @@ module.exports = {
 							{
 								minutesTillNewTarget = (results[0].timeToRevive - Date.now()) / 60000;
 							}
-							
-							user.send(`No target. You will receive a new target in ${minutesTillNewTarget} minutes.`).then(() => 
+
+							minutesTillNewTarget = minutesTillNewTarget / 60;
+
+							user.send(`No target. You will receive a new target in ${minutesTillNewTarget} hours.`).then(() => 
 							{
 								if (message.channel.type === "dm") return;
 							})
