@@ -30,19 +30,22 @@ module.exports = {
 							message.channel.send(`Could not send DM to ${player.tag}.\n`);
 						});
 					}).catch(err => {
-                        user.send(`No target.`).then(() => 
-						{
-							if (message.channel.type === "dm") return;
-						})
-						.catch((error) => 
-						{
-							// On failing, throw error.
-							console.error(
-								`Could not send DM to ${player.tag}.\n`,
-								error
-							);
+						global.con.query(`SELECT * FROM 'players' WHERE id = ${user.id}`, function(err, results, fields) {
+							let minutesTillNewTarget = (results.timeToGetNewTarget - Date.now()) / 60000;
+							user.send(`No target. You will receive a new target in ${minutesTillNewTarget} minutes.`).then(() => 
+							{
+								if (message.channel.type === "dm") return;
+							})
+							.catch((error) => 
+							{
+								// On failing, throw error.
+								console.error(
+									`Could not send DM to ${player.tag}.\n`,
+									error
+								);
 
-							message.channel.send(`Could not send DM to ${player.tag}.\n`);
+								message.channel.send(`Could not send DM to ${player.tag}.\n`);
+							});
 						});
                     })
                     return;
