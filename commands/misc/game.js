@@ -250,12 +250,38 @@ function MondayReset(client, players)
                     });
                 })
 
+                 // MYSQL test so I'm not writing it in every command
+                global.con.ping(function (err) 
+                {
+                    if (err) 
+                    {
+                        console.log("Lost connection to MYSQL, reestablishing before we run the command.")
+                        global.con = createConnection(mysql);
+                        // Then we are going to connect to our MySQL database and we will test this on errors
+                        global.con.connect(err => {
+                            // Console log if there is an error
+                            if (err) return console.log(err);
 
-                // update player as alive and reset points
-                global.con.query(`UPDATE players SET alive = true, targetid = ${randomPlayer.id}, timeToRevive = 0, timeToGetNewTarget = 0 WHERE id = ${player.id}`, (err, row) => {
-                    // Return if there is an error
-                    if (err) {
-                        return console.error(err);
+                            // No error found?
+                            console.log(`MySQL has been connected!`);
+                            // update player as alive and reset points
+                            global.con.query(`UPDATE players SET alive = true, targetid = ${randomPlayer.id}, timeToRevive = 0, timeToGetNewTarget = 0 WHERE id = ${player.id}`, (err, row) => {
+                                // Return if there is an error
+                                if (err) {
+                                    return console.error(err);
+                                }
+                            });
+                        });
+                    }
+                    else
+                    {
+                        // update player as alive and reset points
+                        global.con.query(`UPDATE players SET alive = true, targetid = ${randomPlayer.id}, timeToRevive = 0, timeToGetNewTarget = 0 WHERE id = ${player.id}`, (err, row) => {
+                            // Return if there is an error
+                            if (err) {
+                                return console.error(err);
+                            }
+                        });
                     }
                 });
             })
